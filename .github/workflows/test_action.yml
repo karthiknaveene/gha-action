@@ -2,6 +2,9 @@ name: Test My Go Action
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   run-go-action:
