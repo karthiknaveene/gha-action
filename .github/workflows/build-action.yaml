@@ -42,3 +42,4 @@ jobs:
       - name: Output Image URI
         run: |
           echo "Pushed Image: ${{ steps.vars.outputs.image_uri }}"
+          
