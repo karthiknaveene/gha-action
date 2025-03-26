@@ -26,4 +26,3 @@ jobs:
           branch-name: "workflowTest1"
           workflow-file-name: "workflow-test-1.yaml"
           workflow-inputs: '{"workflowinput1": "test1"}'
-
