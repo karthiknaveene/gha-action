@@ -18,6 +18,6 @@ jobs:
         id: go-action
         with :
           cloudbees-url: "agvs"
-          #cloudbees-pat: "hjavbsx"
+          cloudbees-pat: "hjavbsx"
           component-id : "jhabsx"
           workflow-file-name: "jzhbx"
