@@ -1,10 +1,10 @@
 package internal
 
 type InvokeCloudBeesWorkflow struct {
-	ComponentId      string            `json:"component-id,omitempty"`
-	BranchName       string            `json:"branch-name,omitempty"`
-	WorkflowFileName string            `json:"workflow-file-name,omitempty"`
-	WorkflowInputs   map[string]string `json:"workflow-inputs,omitempty"`
+	ComponentId      string            `json:"component_id,omitempty"`
+	BranchName       string            `json:"branch_name,omitempty"`
+	WorkflowFileName string            `json:"workflow_file_name,omitempty"`
+	WorkflowInputs   map[string]string `json:"workflow_inputs,omitempty"`
 }
 
 type ProviderInfo struct {
