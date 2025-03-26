@@ -23,14 +23,14 @@ func (config *Config) Run(_ context.Context) (err error) {
 
 	cloudEventData := prepareCloudEventData(config)
 
-	_, err = prepareCloudEvent(config, cloudEventData)
+	cloudEvent, err := prepareCloudEvent(config, cloudEventData)
 	if err != nil {
 		return err
 	}
-	//err = sendCloudEvent(cloudEvent, config)
-	//if err != nil {
-	//	return err
-	//}
+	err = sendCloudEvent(cloudEvent, config)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -87,6 +87,22 @@ func setEnvVars(cfg *Config) error {
 
 	cfg.GhaJobName = ghaJobName
 
+	workflowName := os.Getenv(WorkflowFileName)
+	if workflowName == "" {
+		return fmt.Errorf(WorkflowFileName + " is not set in the environment")
+	}
+	cfg.WorkflowFileName = workflowName
+
+	branchName := os.Getenv(BranchName)
+	if branchName == "" {
+		var err error
+		branchName, err = getCurrentBranchFromRef()
+		if err != nil {
+			return fmt.Errorf(BranchName + " is not set in the environment")
+		}
+	}
+	cfg.BranchName = branchName
+
 	cfg.GhaServerUrl = os.Getenv(GithubServerUrl)
 
 	return nil
@@ -119,7 +135,7 @@ func prepareCloudEvent(config *Config, output Output) (cloudevents.Event, error)
 	cloudEvent.SetSpecVersion(SpecVersion)
 	cloudEvent.SetTime(time.Now())
 	err := cloudEvent.SetData(ContentTypeJson, output)
-	fmt.Println("cloudEvent set data")
+	fmt.Println("CloudEvent set data")
 	fmt.Println(PrettyPrint(cloudEvent))
 	if err != nil {
 		return cloudevents.Event{}, fmt.Errorf("failed to set data: %v", err)
@@ -147,7 +163,7 @@ func prepareCloudEventData(config *Config) Output {
 		InvokeWorkflow: *invokeCloudBeesWorkflow,
 		ProviderInfo:   *providerInfo,
 	}
-	fmt.Println("Output")
+	fmt.Println("Output set data")
 	fmt.Println(PrettyPrint(output))
 	return output
 }
@@ -191,4 +207,17 @@ func PrettyPrint(in interface{}) string {
 		fmt.Println("error marshalling response", err)
 	}
 	return string(data)
+}
+
+func getCurrentBranchFromRef() (string, error) {
+	githubRef := os.Getenv(GitHubRef)
+	if githubRef == "" {
+		return "", fmt.Errorf("GITHUB_REF environment variable is not set")
+	}
+
+	if strings.HasPrefix(githubRef, "refs/heads/") {
+		return strings.TrimPrefix(githubRef, "refs/heads/"), nil
+	}
+
+	return "", fmt.Errorf("GITHUB_REF does not point to a branch, found: %s", githubRef)
 }

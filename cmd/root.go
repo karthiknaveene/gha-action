@@ -2,12 +2,12 @@ package cmd
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"gha-action/internal"
 	"github.com/spf13/cobra"
 	"os"
 	"os/signal"
-	"strings"
 )
 
 var (
@@ -36,26 +36,15 @@ func setDefaultValues(cfg *internal.Config) {
 		cfg.ComponentId = ""
 	}
 
-	branchName := os.Getenv(internal.BranchName)
-	if branchName != "" {
-		cfg.BranchName = branchName
-	} else {
-		currentBranch, _ := getCurrentBranchFromRef()
-		cfg.BranchName = currentBranch
-	}
-
-	workflowFileName := os.Getenv(internal.WorkflowFileName)
-	if workflowFileName != "" {
-		cfg.WorkflowFileName = workflowFileName
-	} else {
-		cfg.WorkflowFileName = ""
-	}
-
 	workflowInputs := os.Getenv(internal.WorkflowInputs)
+	fmt.Println(workflowInputs)
 	if workflowInputs != "" {
-		cfg.WorkflowInputs = workflowInputs
+		err := json.Unmarshal([]byte(workflowInputs), &cfg.WorkflowInputs)
+		if err != nil {
+			fmt.Println("Error unmarshalling workflow inputs:", err)
+		}
 	} else {
-		cfg.WorkflowInputs = ""
+		cfg.WorkflowInputs = make(map[string]string)
 	}
 }
 
@@ -72,17 +61,4 @@ func run(_ *cobra.Command, args []string) error {
 	}()
 
 	return cfg.Run(newContext)
-}
-
-func getCurrentBranchFromRef() (string, error) {
-	githubRef := os.Getenv("GITHUB_REF")
-	if githubRef == "" {
-		return "", fmt.Errorf("GITHUB_REF environment variable is not set")
-	}
-
-	if strings.HasPrefix(githubRef, "refs/heads/") {
-		return strings.TrimPrefix(githubRef, "refs/heads/"), nil
-	}
-
-	return "", fmt.Errorf("GITHUB_REF does not point to a branch, found: %s", githubRef)
 }

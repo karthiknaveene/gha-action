@@ -25,4 +25,5 @@ const (
 	PostMethod                   = "POST"
 	GithubProvider               = "GITHUB"
 	GithubJobName                = "GITHUB_JOB"
+	GitHubRef                    = "GITHUB_REF"
 )
