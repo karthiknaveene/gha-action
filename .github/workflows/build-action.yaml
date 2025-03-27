@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - mainq
 
 jobs:
   build-and-push:
@@ -43,3 +43,4 @@ jobs:
         run: |
           echo "Pushed Image: ${{ steps.vars.outputs.image_uri }}"
           
+
