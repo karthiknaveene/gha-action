@@ -191,7 +191,16 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 		return fmt.Errorf("error sending CloudEvent to platform %s", err)
 	}
 	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("error sending CloudEvent to platform %s", resp.Status)
+		body, _ := io.ReadAll(resp.Body)
+		// handle known error cases
+		switch resp.StatusCode {
+		case http.StatusUnauthorized, http.StatusForbidden:
+			return nil, constants.NoAccessErr
+		case http.StatusNotFound:
+			return nil, constants.NotFoundErr
+		}
+		return nil, fmt.Errorf("TriggerWorkflow API - received non-200 status code: %d, response: %s", resp.StatusCode, string(body))
+		//return fmt.Errorf("error sending CloudEvent to platform %s", resp.Status)
 	}
 	
 	// Read the response body (so we can print it)
@@ -203,9 +212,9 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 		fmt.Println("Response body:", string(body))
 	}
 	
+	
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
-		fmt
 		if err != nil {
 			fmt.Println("Error closing response body:", err)
 		}
