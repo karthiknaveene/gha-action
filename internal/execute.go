@@ -183,6 +183,7 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 	req.Header.Set(AuthorizationHeaderKey, Bearer+config.CloudBeesApiToken)
 	client := &http.Client{}
 	resp, err := client.Do(req) // Fire and forget
+	fmt.Println("Error from service:", err)
 
 	if err != nil {
 		return fmt.Errorf("error sending CloudEvent to platform %s", err)
