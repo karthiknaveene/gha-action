@@ -184,6 +184,7 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 	client := &http.Client{}
 	resp, err := client.Do(req) // Fire and forget
 	fmt.Println("Error from service:", err)
+	fmt.Println("Response from service:", resp)
 
 	if err != nil {
 		return fmt.Errorf("error sending CloudEvent to platform %s", err)
