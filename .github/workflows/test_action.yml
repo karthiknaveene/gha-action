@@ -22,7 +22,7 @@ jobs:
         with :
           cloudbees-url: "https://api.saas-preprod.beescloud.com/"
           #cloudbees-pat: ${{ secrets.MY_PAT }}
-          cloudbees-pat: ${{ secrets.EXTERNAL_PAT }}
+          cloudbees-pat: ${{ secrets.MY_PAT }}
           component-id: "0a93f2dc-ae5c-4246-ab82-3db8c8328284"
           #component-id: "f7c355fe-3c6a-4b37-9733-8aa51585915f"
           branch-name: "main"
