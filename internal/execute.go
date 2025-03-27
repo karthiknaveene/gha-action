@@ -169,6 +169,14 @@ func prepareCloudEventData(config *Config) Output {
 	fmt.Println(PrettyPrint(output))
 	return output
 }
+
+type ErrorResponse struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+	Details []any  `json:"details"`
+}
+
+
 func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 	eventJSON, err := json.Marshal(cloudEvent)
 	if err != nil {
@@ -183,36 +191,18 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 	req.Header.Set(AuthorizationHeaderKey, Bearer+config.CloudBeesApiToken)
 	client := &http.Client{}
 	resp, err := client.Do(req) // Fire and forget
-	fmt.Println("Error from service:", err)
-	fmt.Println("Response from service:", resp)
-	fmt.Println(PrettyPrint(resp))
+	
 
 	if err != nil {
 		return fmt.Errorf("error sending CloudEvent to platform %s", err)
 	}
 	if resp.StatusCode != http.StatusOK {
-		body, _ := io.ReadAll(resp.Body)
-		fmt.Println("received non-200 status code: %d, response: %s", resp.StatusCode, string(body))
-		return fmt.Errorf("received non-200 status code: %d, response: %s", resp.StatusCode, string(body))
-		// handle known error cases
-		// switch resp.StatusCode {
-		// // case http.StatusUnauthorized, http.StatusForbidden:
-		// // 	return nil, constants.NoAccessErr
-		// // case http.StatusNotFound:
-		// // 	return nil, constants.NotFoundErr
-		// // }
-		//return fmt.Errorf("error sending CloudEvent to platform %s", resp.Status)
-	}
-	
-	// Read the response body (so we can print it)
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println("Error reading response body:", err)
-	} else {
-		// Print the response body
-		fmt.Println("Response body:", string(body))
-	}
-	
+		var errorResponse ErrorResponse
+		if err := json.Unmarshal(body, &errorResponse); err != nil {
+			fmt.Println("Error unmarshaling response body:", err)
+		}
+		return fmt.Errorf("error sending CloudEvent to platform: %s", errorResponse.Message)
+	}	
 	
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
