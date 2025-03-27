@@ -28,7 +28,7 @@ jobs:
           branch-name: "workflowTest1"
           workflow-file-name: "workflow-test-1.yaml"
           #workflow-file-name: "go-publish-results-using-json"
-          #workflow-inputs: '{"workflowinput1": "test1"}'
+          workflow-inputs: '{"workflowinput1": "test1"}'
 
 
 
