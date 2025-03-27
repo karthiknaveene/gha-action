@@ -184,11 +184,9 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 
 	if err != nil {
 		fmt.Println("error sending CloudEvent to platform %s", err)
-		return nil
 	}
 	if resp.StatusCode != http.StatusOK {
 		fmt.Println("error sending CloudEvent to platform %s", err)
-		return nil
 		//return fmt.Errorf("error sending CloudEvent to platform %s", resp.Status)
 	}
 	defer func(Body io.ReadCloser) {
