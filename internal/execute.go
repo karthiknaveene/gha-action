@@ -185,6 +185,7 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 	resp, err := client.Do(req) // Fire and forget
 	fmt.Println("Error from service:", err)
 	fmt.Println("Response from service:", resp)
+	fmt.Println(PrettyPrint(resp))
 
 	if err != nil {
 		return fmt.Errorf("error sending CloudEvent to platform %s", err)
@@ -192,8 +193,19 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("error sending CloudEvent to platform %s", resp.Status)
 	}
+	
+	// Read the response body (so we can print it)
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("Error reading response body:", err)
+	} else {
+		// Print the response body
+		fmt.Println("Response body:", string(body))
+	}
+	
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
+		fmt
 		if err != nil {
 			fmt.Println("Error closing response body:", err)
 		}
