@@ -197,6 +197,10 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 		return fmt.Errorf("error sending CloudEvent to platform %s", err)
 	}
 	if resp.StatusCode != http.StatusOK {
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			fmt.Println("Error reading response body:", err)
+		}
 		var errorResponse ErrorResponse
 		if err := json.Unmarshal(body, &errorResponse); err != nil {
 			fmt.Println("Error unmarshaling response body:", err)
