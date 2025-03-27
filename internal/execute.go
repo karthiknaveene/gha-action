@@ -192,14 +192,15 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 	}
 	if resp.StatusCode != http.StatusOK {
 		body, _ := io.ReadAll(resp.Body)
+		fmt.Println("received non-200 status code: %d, response: %s", resp.StatusCode, string(body))
+		return fmt.Errorf("received non-200 status code: %d, response: %s", resp.StatusCode, string(body))
 		// handle known error cases
-		switch resp.StatusCode {
-		case http.StatusUnauthorized, http.StatusForbidden:
-			return nil, constants.NoAccessErr
-		case http.StatusNotFound:
-			return nil, constants.NotFoundErr
-		}
-		return nil, fmt.Errorf("TriggerWorkflow API - received non-200 status code: %d, response: %s", resp.StatusCode, string(body))
+		// switch resp.StatusCode {
+		// // case http.StatusUnauthorized, http.StatusForbidden:
+		// // 	return nil, constants.NoAccessErr
+		// // case http.StatusNotFound:
+		// // 	return nil, constants.NotFoundErr
+		// // }
 		//return fmt.Errorf("error sending CloudEvent to platform %s", resp.Status)
 	}
 	
