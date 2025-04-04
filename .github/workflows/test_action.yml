@@ -23,7 +23,7 @@ jobs:
           cloudbees-pat: ${{ secrets.EXTERNAL_PAT_3 }}
           #cloudbees-pat: ${{ secrets.EXTERNAL_PAT }}
           #component-id: "0a93f2dc-ae5c-4246-ab82-3db8c8328284"
-          component-id: "395bb7a1-0380-429a-9638-3b33a5e6d026"
+          component-id: "395bb7a1-0380-429a-9638-3b33a5e6d026T"
           branch-name: "workflowTest1"
           #branch-name: "main"
           workflow-file-name: "workflow-test-1.yaml"
