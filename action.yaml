@@ -28,17 +28,21 @@ outputs:
 
 runs:
   using: "docker"
-  image: "docker://ghcr.io/karthiknaveene/gha-action/my-app:latest"  # @TODO: Add the image
-  env:
-    CLOUDBEES_API_URL: ${{ inputs.cloudbees-url }}
-    CLOUDBEES_API_TOKEN: ${{ inputs.cloudbees-pat }}
-    COMPONENT_ID: ${{ inputs.component-id }}
-    BRANCH_NAME: ${{ inputs.branch-name }}
-    WORKFLOW_FILE_NAME: ${{ inputs.workflow-file-name }}
-    WORKFLOW_INPUTS: ${{ inputs.workflow-inputs }}
+  steps:
+    - name: Set Greeting
+      image: "docker://ghcr.io/karthiknaveene/gha-action/my-app:latest"  # @TODO: Add the image
+      env:
+        CLOUDBEES_API_URL: ${{ inputs.cloudbees-url }}
+        CLOUDBEES_API_TOKEN: ${{ inputs.cloudbees-pat }}
+        COMPONENT_ID: ${{ inputs.component-id }}
+        BRANCH_NAME: ${{ inputs.branch-name }}
+        WORKFLOW_FILE_NAME: ${{ inputs.workflow-file-name }}
+        WORKFLOW_INPUTS: ${{ inputs.workflow-inputs }}
 
-  name: Random Number Generator
-  id: random-number-generator
-  run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
-  shell: bash
+    - name: Random Number Generator
+      id: random-number-generator
+      run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
+      shell: bash
+
+  
 
