@@ -235,6 +235,7 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 	if successResponse.EventOutput.InvokeWorkflowOutput.RunUrl != "" {
 		// Set the runUrl as an environment variable
 		err := os.Setenv("RUN_URL", successResponse.EventOutput.InvokeWorkflowOutput.RunUrl)
+		fmt.Printf(`::set-output name=cbp_run_url::%s`, successResponse.EventOutput.InvokeWorkflowOutput.RunUrl)
 		if err != nil {
 			return fmt.Errorf("error setting environment variable: %s", err)
 		}
