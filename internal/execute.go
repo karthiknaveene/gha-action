@@ -197,17 +197,18 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 		return fmt.Errorf("error sending CloudEvent to platform %s", err)
 	}
 
-	// if resp.StatusCode != http.StatusOK {
-	// 	body, err := io.ReadAll(resp.Body)
-	// 	if err != nil {
-	// 		fmt.Println("Error reading response body:", err)
-	// 	}
-	// 	var errorResponse ErrorResponse
-	// 	if err := json.Unmarshal(body, &errorResponse); err != nil {
-	// 		fmt.Println("Error unmarshaling response body:", err)
-	// 	}
-	// 	return fmt.Errorf("Error sending CloudEvent to platform: %s", errorResponse.Message)
-	// }	
+	if resp.StatusCode != http.StatusOK {
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			fmt.Println("Error reading response body:", err)
+		}
+		fmt.Println("Successful response body - error code:", string(body))
+		var errorResponse ErrorResponse
+		if err := json.Unmarshal(body, &errorResponse); err != nil {
+			fmt.Println("Error unmarshaling response body:", err)
+		}
+		return fmt.Errorf("Error sending CloudEvent to platform: %s", errorResponse.Message)
+	}	
 
 	// If status code is OK, print the response body
 	body, err := io.ReadAll(resp.Body)
