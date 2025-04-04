@@ -28,7 +28,7 @@ jobs:
           #branch-name: "main"
           workflow-file-name: "workflow-test-1.yaml"
           #workflow-file-name: "go-publish-results-using-json"
-          workflow-inputs: '{"workflowinput1": "test1"}'
+          workflow-inputs: '{"workflowinput1q": "test1"}'
 
       - name: Use runUrl output
         run: echo "The CloudBees run URL is ${{ steps.go-action.outputs.cbp_run_url}}"
