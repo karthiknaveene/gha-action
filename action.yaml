@@ -37,7 +37,7 @@ runs:
     WORKFLOW_FILE_NAME: ${{ inputs.workflow-file-name }}
     WORKFLOW_INPUTS: ${{ inputs.workflow-inputs }}
 
-- name: Random Number Generator
+  name: Random Number Generator
   id: random-number-generator
   run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
   shell: bash
