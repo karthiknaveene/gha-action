@@ -21,6 +21,11 @@ inputs:
     description: 'Input parameters to be passed to trigger the workflow. Represented as key-value pairs, where keys and values are both strings.'
     required: false
 
+outputs:
+  random-number:
+    description: "Random number"
+    value: ${{ steps.random-number-generator.outputs.random-number }}
+
 runs:
   using: "docker"
   image: "docker://ghcr.io/karthiknaveene/gha-action/my-app:latest"  # @TODO: Add the image
@@ -32,7 +37,8 @@ runs:
     WORKFLOW_FILE_NAME: ${{ inputs.workflow-file-name }}
     WORKFLOW_INPUTS: ${{ inputs.workflow-inputs }}
 
-outputs:
-  runUrl:
-    description: 'The run URL of the triggered CloudBees workflow.'
-    value: ${{ env.RUN_URL }}
+- name: Random Number Generator
+  id: random-number-generator
+  run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
+  shell: bash
+
