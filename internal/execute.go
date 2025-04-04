@@ -231,18 +231,26 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 		return fmt.Errorf("error unmarshaling response body: %s", err)
 	}
 
-	// Check if the runUrl exists in the response
-	if successResponse.EventOutput.InvokeWorkflowOutput.RunUrl != "" {
-		// Set the runUrl as an environment variable
-		err := os.Setenv("RUN_URL", successResponse.EventOutput.InvokeWorkflowOutput.RunUrl)
-		fmt.Printf(`::set-output name=cbp_run_url::%s`, successResponse.EventOutput.InvokeWorkflowOutput.RunUrl)
-		if err != nil {
-			return fmt.Errorf("error setting environment variable: %s", err)
-		}
-		fmt.Println("RUN_URL environment variable set successfully:", successResponse.EventOutput.InvokeWorkflowOutput.RunUrl)
-	} else {
-		return fmt.Errorf("runUrl not found in the response")
+
+
+		//fmt.Printf(`::set-output name=cbp_run_url::%s`, successResponse.EventOutput.InvokeWorkflowOutput.RunUrl)
+		// Output the runUrl to GITHUB_OUTPUT file for GitHub Actions
+	runUrl := successResponse.EventOutput.InvokeWorkflowOutput.RunUrl
+
+	// Open the GITHUB_OUTPUT file to append the output
+	outputFile, err := os.OpenFile(os.Getenv("GITHUB_OUTPUT"), os.O_APPEND|os.O_WRONLY, 0600)
+	if err != nil {
+		log.Fatalf("Error opening GITHUB_OUTPUT file: %v", err)
 	}
+	defer outputFile.Close()
+
+	// Write the output to the GITHUB_OUTPUT file in the format expected by GitHub Actions
+	_, err = fmt.Fprintf(outputFile, "cbp_run_url=%s\n", runUrl)
+	if err != nil {
+		log.Fatalf("Error writing to GITHUB_OUTPUT: %v", err)
+	}
+		
+	
 	
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
