@@ -240,14 +240,14 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 	// Open the GITHUB_OUTPUT file to append the output
 	outputFile, err := os.OpenFile(os.Getenv("GITHUB_OUTPUT"), os.O_APPEND|os.O_WRONLY, 0600)
 	if err != nil {
-		log.Fatalf("Error opening GITHUB_OUTPUT file: %v", err)
+		return fmt.Errorf("Error opening GITHUB_OUTPUT file: %v", err)
 	}
 	defer outputFile.Close()
 
 	// Write the output to the GITHUB_OUTPUT file in the format expected by GitHub Actions
 	_, err = fmt.Fprintf(outputFile, "cbp_run_url=%s\n", runUrl)
 	if err != nil {
-		log.Fatalf("Error writing to GITHUB_OUTPUT: %v", err)
+		return fmt.Errorf("Error writing to GITHUB_OUTPUT: %v", err)
 	}
 		
 	
