@@ -259,7 +259,7 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 
 	fmt.Println("CloudEvent sent successfully!")
 	if successResponse.ErrorMessage != ""{
-		return fmt.Errorf("Error while invoking CloudBees workflow: %v", err)
+		return fmt.Errorf("Error while invoking CloudBees workflow: %v", successResponse.ErrorMessage)
 	}
 	return nil
 }
