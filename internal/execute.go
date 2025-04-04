@@ -30,7 +30,7 @@ func (config *Config) Run(_ context.Context) (err error) {
 	}
 	err = sendCloudEvent(cloudEvent, config)
 	if err != nil {
-		//fmt.Println("error sending CloudEvent %s", err)
+		fmt.Println("error sending CloudEvent %s", err)
 		return nil
 	}
 	return nil
