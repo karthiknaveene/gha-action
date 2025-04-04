@@ -32,5 +32,5 @@ jobs:
           workflow-inputs: '{"workflowinput1": "test1"}'
 
       - name: Use runUrl output
-        run: echo "The CloudBees run URL is ${{ steps.go-action.outputs.runUrl }}"
+        run: echo "The CloudBees run URL is ${{ env.CBP_RUN_URL }}"
 
