@@ -30,7 +30,7 @@ func (config *Config) Run(_ context.Context) (err error) {
 	}
 	err = sendCloudEvent(cloudEvent, config)
 	if err != nil {
-		fmt.Println("error sending CloudEvent %s", err)
+		//fmt.Println("error sending CloudEvent %s", err)
 		return nil
 	}
 	return nil
@@ -231,10 +231,8 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 		return fmt.Errorf("error unmarshaling response body: %s", err)
 	}
 
-
-
-		//fmt.Printf(`::set-output name=cbp_run_url::%s`, successResponse.EventOutput.InvokeWorkflowOutput.RunUrl)
-		// Output the runUrl to GITHUB_OUTPUT file for GitHub Actions
+	//fmt.Printf(`::set-output name=cbp_run_url::%s`, successResponse.EventOutput.InvokeWorkflowOutput.RunUrl)
+	// Output the runUrl to GITHUB_OUTPUT file for GitHub Actions
 	runUrl := successResponse.EventOutput.InvokeWorkflowOutput.RunUrl
 
 	// Open the GITHUB_OUTPUT file to append the output
@@ -249,8 +247,6 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 	if err != nil {
 		return fmt.Errorf("Error writing to GITHUB_OUTPUT: %v", err)
 	}
-		
-	
 	
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
@@ -260,6 +256,9 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 	}(resp.Body)
 
 	fmt.Println("CloudEvent sent successfully!")
+	if successResponse.ErrorMessage != ""{
+		return fmt.Errorf("Error while invoking CloudBees workflow: %v", err)
+	}
 	return nil
 }
 
