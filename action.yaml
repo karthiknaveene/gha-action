@@ -31,3 +31,8 @@ runs:
     BRANCH_NAME: ${{ inputs.branch-name }}
     WORKFLOW_FILE_NAME: ${{ inputs.workflow-file-name }}
     WORKFLOW_INPUTS: ${{ inputs.workflow-inputs }}
+
+outputs:
+  runUrl:
+    description: 'The run URL of the triggered CloudBees workflow.'
+    value: ${{ env.RUN_URL }}

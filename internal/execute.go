@@ -214,6 +214,34 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 		return fmt.Errorf("error reading successful response body: %s", err)
 	}
 	fmt.Println("Successful response body:", string(body))
+
+	// Define the response structure based on the JSON format
+	var successResponse struct {
+		Success     bool `json:"success"`
+		ErrorMessage string `json:"errorMessage"`
+		EventOutput struct {
+			InvokeWorkflowOutput struct {
+				RunUrl string `json:"runUrl"`
+			} `json:"invokeWorkflowOutput"`
+		} `json:"eventOutput"`
+	}
+
+	// Unmarshal the JSON into the struct
+	if err := json.Unmarshal(body, &successResponse); err != nil {
+		return fmt.Errorf("error unmarshaling response body: %s", err)
+	}
+
+	// Check if the runUrl exists in the response
+	if successResponse.EventOutput.InvokeWorkflowOutput.RunUrl != "" {
+		// Set the runUrl as an environment variable
+		err := os.Setenv("RUN_URL", successResponse.EventOutput.InvokeWorkflowOutput.RunUrl)
+		if err != nil {
+			return fmt.Errorf("error setting environment variable: %s", err)
+		}
+		fmt.Println("RUN_URL environment variable set successfully:", successResponse.EventOutput.InvokeWorkflowOutput.RunUrl)
+	} else {
+		return fmt.Errorf("runUrl not found in the response")
+	}
 	
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
