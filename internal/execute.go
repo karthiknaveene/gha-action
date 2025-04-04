@@ -205,8 +205,15 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 		if err := json.Unmarshal(body, &errorResponse); err != nil {
 			fmt.Println("Error unmarshaling response body:", err)
 		}
-		return fmt.Errorf("error sending CloudEvent to platform: %s", errorResponse.Message)
+		return fmt.Errorf("Error sending CloudEvent to platform: %s", errorResponse.Message)
 	}	
+
+	// If status code is OK, print the response body
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("error reading successful response body: %s", err)
+	}
+	fmt.Println("Successful response body:", string(body))
 	
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
