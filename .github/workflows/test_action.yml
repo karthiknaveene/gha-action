@@ -31,4 +31,3 @@ jobs:
           #workflow-file-name: "go-publish-results-using-json"
           workflow-inputs: '{"workflowinput1": "test1"}'
 
-
