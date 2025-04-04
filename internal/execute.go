@@ -189,7 +189,9 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 
 	req.Header.Set(ContentTypeHeaderKey, ContentTypeCloudEventsJson)
 	req.Header.Set(AuthorizationHeaderKey, Bearer+config.CloudBeesApiToken)
-	client := &http.Client{}
+	client := &http.Client{
+		Timeout: 90 * time.Second, // Set the timeout to 30 seconds (you can adjust this)
+	}
 	resp, err := client.Do(req) // Fire and forget
 	
 
