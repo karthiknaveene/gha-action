@@ -203,7 +203,7 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 			//fmt.Println("Error unmarshaling response body:", err)
 		}
 		if errorResponse.Message == "" || errorResponse.Message == "permission denied" {
-			return errors.New("Please provide a valid cloudbees api token")
+			return errors.New(errorResponse.Message  + ".Please provide a valid cloudbees api url")
 		}
 		return errors.New(errorResponse.Message)
 	}
