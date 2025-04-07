@@ -26,12 +26,12 @@ func (config *Config) Run(_ context.Context) (err error) {
 
 	cloudEvent, err := prepareCloudEvent(config, cloudEventData)
 	if err != nil {
-		fmt.Printf("error preparing CloudEvent %s", err)
+		fmt.Printf("error preparing CloudEvent %v", err)
 		return nil
 	}
 	err = sendCloudEvent(cloudEvent, config)
 	if err != nil {
-		fmt.Printf("error sending CloudEvent %s", err)
+		fmt.Printf("error sending CloudEvent %v", err)
 		return nil
 	}
 	return nil
@@ -238,6 +238,7 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 		fmt.Printf("Error while invoking CloudBees workflow: %v", successResponse.ErrorMessage)
 		//return fmt.Errorf("Error while invoking CloudBees workflow: %v", successResponse.ErrorMessage)
 	}
+	fmt.Printf("error %v", err)
 	return nil
 }
 
