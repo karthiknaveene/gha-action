@@ -31,6 +31,7 @@ func (config *Config) Run(_ context.Context) (err error) {
 	}
 	err = sendCloudEvent(cloudEvent, config)
 	if err != nil {
+		fmt.Println(err)
 		fmt.Printf("error sending CloudEvent %v", err)
 		return nil
 	}
@@ -187,7 +188,7 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 	resp, err := client.Do(req) // Fire and forget
 
 	if err != nil {
-		return fmt.Errorf("%w: Please provide a valid CloudBees PAT token.", err)
+		return err
 	}
 
 	if resp.StatusCode != http.StatusOK {
@@ -195,11 +196,14 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 		if err != nil {
 			fmt.Println("Error reading response body:", err)
 		}
-		//fmt.Println("Not successful response body - error code:", string(body))
+		fmt.Println("Not successful response body - error code:", string(body))
 		var errorResponse ErrorResponse
 		if err := json.Unmarshal(body, &errorResponse); err != nil {
 			return errors.New(string(body) + ".Please provide a valid cloudbees api url")
 			//fmt.Println("Error unmarshaling response body:", err)
+		}
+		if errorResponse.Message == "" {
+			return errors.New("Please provide a valid cloudbees api token")
 		}
 		return errors.New(errorResponse.Message)
 	}
