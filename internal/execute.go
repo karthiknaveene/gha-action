@@ -26,12 +26,12 @@ func (config *Config) Run(_ context.Context) (err error) {
 
 	cloudEvent, err := prepareCloudEvent(config, cloudEventData)
 	if err != nil {
-		fmt.Println("error preparing CloudEvent %s", err)
+		fmt.Printf("error preparing CloudEvent %s", err)
 		return nil
 	}
 	err = sendCloudEvent(cloudEvent, config)
 	if err != nil {
-		fmt.Println("error sending CloudEvent %s", err)
+		fmt.Printf("error sending CloudEvent %s", err)
 		return nil
 	}
 	return nil
@@ -198,7 +198,7 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 		//fmt.Println("Not successful response body - error code:", string(body))
 		var errorResponse ErrorResponse
 		if err := json.Unmarshal(body, &errorResponse); err != nil {
-			return errors.New(string(body))
+			return errors.New(string(body) + ".Please provide a valid cloudbees api url")
 			//fmt.Println("Error unmarshaling response body:", err)
 		}
 		return errors.New(errorResponse.Message)
