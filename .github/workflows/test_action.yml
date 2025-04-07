@@ -26,7 +26,7 @@ jobs:
           component-id: "395bb7a1-0380-429a-9638-3b33a5e6d026"
           branch-name: "workflowTest1"
           #branch-name: "main"
-          #workflow-file-name: "workflow-test-1.yaml"
+          workflow-file-name: "workflow-test-1.yaml"
           #workflow-file-name: "go-publish-results-using-json"
           workflow-inputs: '{"workflowinput1": "test1"}'
 
