@@ -242,14 +242,16 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 	// Open the GITHUB_OUTPUT file to append the output
 	outputFile, err := os.OpenFile(os.Getenv("GITHUB_OUTPUT"), os.O_APPEND|os.O_WRONLY, 0600)
 	if err != nil {
-		return fmt.Errorf("Error opening GITHUB_OUTPUT file: %v", err)
+		fmt.Println("Error opening GITHUB_OUTPUT file: %v", err)
+		return nil
 	}
 	defer outputFile.Close()
 
 	// Write the output to the GITHUB_OUTPUT file in the format expected by GitHub Actions
 	_, err = fmt.Fprintf(outputFile, "cbp_run_url=%s\n", runUrl)
 	if err != nil {
-		return fmt.Errorf("Error writing to GITHUB_OUTPUT: %v", err)
+		fmt.Println("Error writing to GITHUB_OUTPUT: %v", err)
+		return nil
 	}
 	
 	defer func(Body io.ReadCloser) {
@@ -261,7 +263,8 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 
 	fmt.Println("CloudEvent sent successfully!")
 	if successResponse.ErrorMessage != ""{
-		return fmt.Errorf("Error while invoking CloudBees workflow: %v", successResponse.ErrorMessage)
+		fmt.Println("Error while invoking CloudBees workflow: %v", successResponse.ErrorMessage)
+		//return fmt.Errorf("Error while invoking CloudBees workflow: %v", successResponse.ErrorMessage)
 	}
 	return nil
 }
