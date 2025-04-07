@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	cloudevents "github.com/cloudevents/sdk-go/v2"
 	"github.com/google/uuid"
@@ -128,7 +129,7 @@ func getSource(config *Config) string {
 	}
 	return sourcePrefix + config.GhaRepository
 }
-func prepareCloudEvent(config *Config, output Output) (cloudevents.Event, error) {
+func prepareCloudEvent(config *Config, cloudEventData CloudEventData) (cloudevents.Event, error) {
 	cloudEvent := cloudevents.NewEvent()
 	cloudEvent.SetID(uuid.NewString())
 	cloudEvent.SetSubject(getSubject(config))
@@ -136,7 +137,7 @@ func prepareCloudEvent(config *Config, output Output) (cloudevents.Event, error)
 	cloudEvent.SetSource(getSource(config))
 	cloudEvent.SetSpecVersion(SpecVersion)
 	cloudEvent.SetTime(time.Now())
-	err := cloudEvent.SetData(ContentTypeJson, output)
+	err := cloudEvent.SetData(ContentTypeJson, cloudEventData)
 	fmt.Println("CloudEvent set data")
 	fmt.Println(PrettyPrint(cloudEvent))
 	if err != nil {
@@ -145,7 +146,7 @@ func prepareCloudEvent(config *Config, output Output) (cloudevents.Event, error)
 	return cloudEvent, nil
 }
 
-func prepareCloudEventData(config *Config) Output {
+func prepareCloudEventData(config *Config) CloudEventData {
 
 	invokeCloudBeesWorkflow := &InvokeCloudBeesWorkflow{
 		ComponentId:      config.ComponentId,
@@ -161,21 +162,14 @@ func prepareCloudEventData(config *Config) Output {
 		JobName:    config.GhaJobName,
 		Provider:   GithubProvider,
 	}
-	output := Output{
+	cloudEventData := CloudEventData{
 		InvokeWorkflow: *invokeCloudBeesWorkflow,
 		ProviderInfo:   *providerInfo,
 	}
 	fmt.Println("Output set data")
-	fmt.Println(PrettyPrint(output))
-	return output
+	fmt.Println(PrettyPrint(cloudEventData))
+	return cloudEventData
 }
-
-type ErrorResponse struct {
-	Code    int    `json:"code"`
-	Message string `json:"message"`
-	Details []any  `json:"details"`
-}
-
 
 func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 	eventJSON, err := json.Marshal(cloudEvent)
@@ -189,14 +183,11 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 
 	req.Header.Set(ContentTypeHeaderKey, ContentTypeCloudEventsJson)
 	req.Header.Set(AuthorizationHeaderKey, Bearer+config.CloudBeesApiToken)
-	client := &http.Client{
-		Timeout: 90 * time.Second, // Set the timeout to 30 seconds (you can adjust this)
-	}
+	client := &http.Client{}
 	resp, err := client.Do(req) // Fire and forget
-	
 
 	if err != nil {
-		return fmt.Errorf("error sending CloudEvent to platform %s", err)
+		return err
 	}
 
 	if resp.StatusCode != http.StatusOK {
@@ -204,13 +195,13 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 		if err != nil {
 			fmt.Println("Error reading response body:", err)
 		}
-		fmt.Println("Successful response body - error code:", string(body))
+		fmt.Println("Not successful response body - error code:", string(body))
 		var errorResponse ErrorResponse
 		if err := json.Unmarshal(body, &errorResponse); err != nil {
 			fmt.Println("Error unmarshaling response body:", err)
 		}
-		return fmt.Errorf("Error sending CloudEvent to platform: %s", errorResponse.Message)
-	}	
+		return errors.New(errorResponse.Message)
+	}
 
 	// If status code is OK, print the response body
 	body, err := io.ReadAll(resp.Body)
@@ -220,40 +211,13 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 	fmt.Println("Successful response body:", string(body))
 
 	// Define the response structure based on the JSON format
-	var successResponse struct {
-		Success     bool `json:"success"`
-		ErrorMessage string `json:"errorMessage"`
-		EventOutput struct {
-			InvokeWorkflowOutput struct {
-				RunUrl string `json:"runUrl"`
-			} `json:"invokeWorkflowOutput"`
-		} `json:"eventOutput"`
-	}
 
 	// Unmarshal the JSON into the struct
+	var successResponse SuccessResponse
 	if err := json.Unmarshal(body, &successResponse); err != nil {
 		return fmt.Errorf("error unmarshaling response body: %s", err)
 	}
 
-	//fmt.Printf(`::set-output name=cbp_run_url::%s`, successResponse.EventOutput.InvokeWorkflowOutput.RunUrl)
-	// Output the runUrl to GITHUB_OUTPUT file for GitHub Actions
-	runUrl := successResponse.EventOutput.InvokeWorkflowOutput.RunUrl
-
-	// Open the GITHUB_OUTPUT file to append the output
-	outputFile, err := os.OpenFile(os.Getenv("GITHUB_OUTPUT"), os.O_APPEND|os.O_WRONLY, 0600)
-	if err != nil {
-		fmt.Println("Error opening GITHUB_OUTPUT file: %v", err)
-		return nil
-	}
-	defer outputFile.Close()
-
-	// Write the output to the GITHUB_OUTPUT file in the format expected by GitHub Actions
-	_, err = fmt.Fprintf(outputFile, "cbp_run_url=%s\n", runUrl)
-	if err != nil {
-		fmt.Println("Error writing to GITHUB_OUTPUT: %v", err)
-		return nil
-	}
-	
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
@@ -261,8 +225,15 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 		}
 	}(resp.Body)
 
+	//fmt.Printf(`::set-output name=cbp_run_url::%s`, successResponse.EventOutput.InvokeWorkflowOutput.RunUrl)
+	// Output the runUrl to GITHUB_OUTPUT file for GitHub Actions
+	runUrl := successResponse.EventOutput.InvokeWorkflowOutput.RunUrl
+	err = writeGitHubOutput(runUrl)
+	if err != nil {
+	}
+
 	fmt.Println("CloudEvent sent successfully!")
-	if successResponse.ErrorMessage != ""{
+	if successResponse.ErrorMessage != "" {
 		fmt.Println("Error while invoking CloudBees workflow: %v", successResponse.ErrorMessage)
 		//return fmt.Errorf("Error while invoking CloudBees workflow: %v", successResponse.ErrorMessage)
 	}
@@ -289,4 +260,21 @@ func getCurrentBranchFromRef() (string, error) {
 	}
 
 	return "", fmt.Errorf("GITHUB_REF does not point to a branch, found: %s", githubRef)
+}
+
+func writeGitHubOutput(runUrl string) error {
+	// Open the GITHUB_OUTPUT file to append the output
+	outputFile, err := os.OpenFile(os.Getenv("GITHUB_OUTPUT"), os.O_APPEND|os.O_WRONLY, 0600)
+	if err != nil {
+		fmt.Println("Error opening GITHUB_OUTPUT file: %v", err)
+		return nil
+	}
+	defer outputFile.Close()
+
+	// Write the output to the GITHUB_OUTPUT file in the format expected by GitHub Actions
+	_, err = fmt.Fprintf(outputFile, "cbp_run_url=%s\n", runUrl)
+	if err != nil {
+		fmt.Println("Error writing to GITHUB_OUTPUT: %v", err)
+	}
+	return nil
 }

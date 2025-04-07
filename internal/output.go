@@ -15,7 +15,23 @@ type ProviderInfo struct {
 	Provider   string `json:"provider,omitempty"`
 }
 
-type Output struct {
+type CloudEventData struct {
 	ProviderInfo   ProviderInfo            `json:"provider_info,omitempty"`
 	InvokeWorkflow InvokeCloudBeesWorkflow `json:"invoke_workflow,omitempty"`
+}
+
+type ErrorResponse struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+	Details []any  `json:"details"`
+}
+
+type SuccessResponse struct {
+	Success      bool   `json:"success"`
+	ErrorMessage string `json:"errorMessage"`
+	EventOutput  struct {
+		InvokeWorkflowOutput struct {
+			RunUrl string `json:"runUrl"`
+		} `json:"invokeWorkflowOutput"`
+	} `json:"eventOutput"`
 }
