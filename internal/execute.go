@@ -19,6 +19,9 @@ func (config *Config) Run(_ context.Context) (err error) {
 
 	validationError := setEnvVars(config)
 	if validationError != nil {
+		if strings.Contains(validationError.Error(), "BRANCH_NAME is not set in the environment") {
+            return nil 
+        }
 		return validationError
 	}
 
