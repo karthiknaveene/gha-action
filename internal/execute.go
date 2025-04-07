@@ -102,7 +102,7 @@ func setEnvVars(cfg *Config) error {
 		var err error
 		branchName, err = getCurrentBranchFromRef()
 		if err != nil {
-			return fmt.Errorf(BranchName + " is not set in the environment")
+			return fmt.Errorf(BranchName + " is not set in the environment. " + err.Error())
 		}
 	}
 	cfg.BranchName = branchName
