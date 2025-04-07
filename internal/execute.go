@@ -26,13 +26,13 @@ func (config *Config) Run(_ context.Context) (err error) {
 
 	cloudEvent, err := prepareCloudEvent(config, cloudEventData)
 	if err != nil {
-		fmt.Printf("error preparing CloudEvent %v", err)
+		fmt.Printf("Error preparing CloudEvent : %v", err)
 		return nil
 	}
 	err = sendCloudEvent(cloudEvent, config)
 	if err != nil {
 		fmt.Println(err)
-		fmt.Printf("error sending CloudEvent %v", err)
+		fmt.Printf("Error sending CloudEvent : %v", err)
 		return nil
 	}
 	return nil
