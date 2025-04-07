@@ -19,7 +19,7 @@ jobs:
         uses: karthiknaveene/gha-action@main
         id: go-action
         with :
-          cloudbees-url: "https://api.saas-preprod.beescloud.com/"
+          cloudbees-url: "https://api.saas-preprod.beescloud.com/q"
           cloudbees-pat: ${{ secrets.EXTERNAL_PAT }}
           #cloudbees-pat: ${{ secrets.MY_PAT }}
           #component-id: "0a93f2dc-ae5c-4246-ab82-3db8c8328284"
