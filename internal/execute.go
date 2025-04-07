@@ -195,10 +195,11 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 		if err != nil {
 			fmt.Println("Error reading response body:", err)
 		}
-		fmt.Println("Not successful response body - error code:", string(body))
+		//fmt.Println("Not successful response body - error code:", string(body))
 		var errorResponse ErrorResponse
 		if err := json.Unmarshal(body, &errorResponse); err != nil {
-			fmt.Println("Error unmarshaling response body:", err)
+			return errors.New(string(body))
+			//fmt.Println("Error unmarshaling response body:", err)
 		}
 		return errors.New(errorResponse.Message)
 	}
