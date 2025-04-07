@@ -234,7 +234,7 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 
 	fmt.Println("CloudEvent sent successfully!")
 	if successResponse.ErrorMessage != "" {
-		fmt.Println("Error while invoking CloudBees workflow: %v", successResponse.ErrorMessage)
+		fmt.Printf("Error while invoking CloudBees workflow: %v", successResponse.ErrorMessage)
 		//return fmt.Errorf("Error while invoking CloudBees workflow: %v", successResponse.ErrorMessage)
 	}
 	return nil
@@ -259,14 +259,14 @@ func getCurrentBranchFromRef() (string, error) {
 		return strings.TrimPrefix(githubRef, "refs/heads/"), nil
 	}
 
-	return "", fmt.Errorf("GITHUB_REF does not point to a branch, found: %s", githubRef)
+	return "", fmt.Errorf("Please specify the branch of the CloudBees workflow, as the current GitHub workflow is not triggered by a branch.")
 }
 
 func writeGitHubOutput(runUrl string) error {
 	// Open the GITHUB_OUTPUT file to append the output
 	outputFile, err := os.OpenFile(os.Getenv("GITHUB_OUTPUT"), os.O_APPEND|os.O_WRONLY, 0600)
 	if err != nil {
-		fmt.Println("Error opening GITHUB_OUTPUT file: %v", err)
+		fmt.Printf("Error opening GITHUB_OUTPUT file: %v", err)
 		return nil
 	}
 	defer outputFile.Close()
@@ -274,7 +274,7 @@ func writeGitHubOutput(runUrl string) error {
 	// Write the output to the GITHUB_OUTPUT file in the format expected by GitHub Actions
 	_, err = fmt.Fprintf(outputFile, "cbp_run_url=%s\n", runUrl)
 	if err != nil {
-		fmt.Println("Error writing to GITHUB_OUTPUT: %v", err)
+		fmt.Printf("Error writing to GITHUB_OUTPUT: %v", err)
 	}
 	return nil
 }
