@@ -187,7 +187,7 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 	resp, err := client.Do(req) // Fire and forget
 
 	if err != nil {
-		return err
+		return fmt.Errorf("%w: Please provide a valid CloudBees PAT token.", err)
 	}
 
 	if resp.StatusCode != http.StatusOK {
