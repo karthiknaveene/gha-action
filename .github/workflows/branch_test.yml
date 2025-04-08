@@ -19,13 +19,14 @@ jobs:
         id: go-action
         with :
           cloudbees-url: "https://api.saas-qa.beescloud.com/"
-          cloudbees-pat: "invalid"
-          #cloudbees-pat: ${{ secrets.MY_PAT }}
+          #cloudbees-pat: "invalid"
+          cloudbees-pat: ${{ secrets.MY_PAT }}
           #component-id: "395bb7a1-0380-429a-9638-3b33a5e6d026"
           #component-id: "invalid"
-          branch-name: "main"
+          component-id: "e46d6663-5516-4aaa-b0ab-60b0d8ebccea"
+          branch-name: "test"
           workflow-file-name: "workflow.yaml"
-          workflow-inputs: '{"workflowinput1": "test1"}'
+          #workflow-inputs: '{"workflowinput1": "test1"}'
 
       - name: Use runUrl output
         run: echo "The CloudBees run URL is ${{ steps.go-action.outputs.cbp_run_url}}"
