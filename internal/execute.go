@@ -33,9 +33,10 @@ func (config *Config) Run(_ context.Context) (err error) {
 	if err != nil {
 		//fmt.Println(err)
 		if strings.Contains(err.Error(), "Please provide a valid cloudbees") {
+			fmt.Printf("Error sending CloudEvent to platform  : %v", err)
 			return err
 		}
-		fmt.Printf("Error sending CloudEvent : %v", err)
+		fmt.Printf("Error sending CloudEvent to platform : %v", err)
 		return nil
 	}
 	return nil
