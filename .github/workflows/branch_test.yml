@@ -24,8 +24,8 @@ jobs:
           #component-id: "395bb7a1-0380-429a-9638-3b33a5e6d026"
           #component-id: "invalid"
           #component-id: "e46d6663-5516-4aaa-b0ab-60b0d8ebccea"
-          branch-name: "test"
-          workflow-file-name: "syntax-issue.yml"
+          branch-name: "test-branch"
+          workflow-file-name: "tag.yaml"
           #workflow-inputs: '{"workflowinput1a": "test1"}'
 
       - name: Use runUrl output
