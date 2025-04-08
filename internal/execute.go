@@ -244,6 +244,10 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 
 	fmt.Println("CloudEvent sent successfully!")
 	if successResponse.ErrorMessage != "" {
+		if strings.Contains(successResponse.ErrorMessage, "run mapping not found") {
+			fmt.Printf("Error while triggering CloudBees workflow: Component Id cannot be left blank as the caller workflow could not be found in Cloudbees platform")
+			return err
+		}
 		fmt.Printf("Error while triggering CloudBees workflow: %v", successResponse.ErrorMessage)
 		return nil
 	}
