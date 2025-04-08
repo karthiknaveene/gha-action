@@ -20,11 +20,11 @@ jobs:
         with :
           cloudbees-url: "https://api.saas-preprod.beescloud.com/"
           #cloudbees-pat: "zbnvXb"
-          cloudbees-pat: ${{ secrets.MY_PAT }}
+          cloudbees-pat: ${{ secrets.JWT }}
           #component-id: "395bb7a1-0380-429a-9638-3b33a5e6d026"
           #component-id: "invalid"
           #branch-name: "main"
-          #workflow-file-name: "workflow.yaml"
+          workflow-file-name: "workflow1.yaml"
           #workflow-inputs: '{"workflowinput1": "test1"}'
 
       - name: Use runUrl output
