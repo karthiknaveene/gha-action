@@ -20,8 +20,8 @@ func (config *Config) Run(_ context.Context) (err error) {
 	validationError := setEnvVars(config)
 	if validationError != nil {
 		if strings.Contains(validationError.Error(), "BRANCH_NAME is not set in the environment") {
-            return nil 
-        }
+			return nil
+		}
 		return validationError
 	}
 
@@ -34,7 +34,7 @@ func (config *Config) Run(_ context.Context) (err error) {
 	}
 	err = sendCloudEvent(cloudEvent, config)
 	if err != nil {
-		fmt.Println(err)
+		//fmt.Println(err)
 		fmt.Printf("Error sending CloudEvent : %v", err)
 		return nil
 	}
@@ -200,14 +200,14 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 		if err != nil {
 			fmt.Println("Error reading response body:", err)
 		}
-		fmt.Println("Not successful response body - error code:", string(body))
+		//fmt.Println("Not successful response body - error code:", string(body))
 		var errorResponse ErrorResponse
 		if err := json.Unmarshal(body, &errorResponse); err != nil {
-			return errors.New(string(body) + ".Please provide a valid cloudbees api url")
+			return errors.New(string(body) + ".Please provide a valid cloudbees api url.")
 			//fmt.Println("Error unmarshaling response body:", err)
 		}
 		if errorResponse.Message == "" || errorResponse.Message == "permission denied" {
-			return errors.New(errorResponse.Message  + ".Please provide a valid cloudbees api url")
+			return errors.New(errorResponse.Message + ". Please provide a valid cloudbees pat token.")
 		}
 		return errors.New(errorResponse.Message)
 	}
@@ -217,7 +217,7 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 	if err != nil {
 		return fmt.Errorf("error reading successful response body: %s", err)
 	}
-	fmt.Println("Successful response body:", string(body))
+	//fmt.Println("Successful response body:", string(body))
 
 	// Define the response structure based on the JSON format
 
@@ -246,7 +246,7 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 		fmt.Printf("Error while invoking CloudBees workflow: %v", successResponse.ErrorMessage)
 		//return fmt.Errorf("Error while invoking CloudBees workflow: %v", successResponse.ErrorMessage)
 	}
-	fmt.Printf("error %v", err)
+	//fmt.Printf("error %v", err)
 	return nil
 }
 
