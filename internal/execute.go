@@ -19,9 +19,6 @@ func (config *Config) Run(_ context.Context) (err error) {
 
 	validationError := setEnvVars(config)
 	if validationError != nil {
-		if strings.Contains(validationError.Error(), "BRANCH_NAME is not set in the environment") {
-			return nil
-		}
 		return validationError
 	}
 
@@ -35,6 +32,9 @@ func (config *Config) Run(_ context.Context) (err error) {
 	err = sendCloudEvent(cloudEvent, config)
 	if err != nil {
 		//fmt.Println(err)
+		if strings.Contains(err.Error(), "Please provide a valid cloudbees") {
+			return err
+		}
 		fmt.Printf("Error sending CloudEvent : %v", err)
 		return nil
 	}
@@ -203,7 +203,7 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 		//fmt.Println("Not successful response body - error code:", string(body))
 		var errorResponse ErrorResponse
 		if err := json.Unmarshal(body, &errorResponse); err != nil {
-			return errors.New(string(body) + ".Please provide a valid cloudbees api url.")
+			return errors.New(string(body) + " Please provide a valid cloudbees api url.")
 			//fmt.Println("Error unmarshaling response body:", err)
 		}
 		if errorResponse.Message == "" || errorResponse.Message == "permission denied" {
@@ -246,6 +246,9 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 		fmt.Printf("Error while triggering CloudBees workflow: %v", successResponse.ErrorMessage)
 		//return fmt.Errorf("Error while invoking CloudBees workflow: %v", successResponse.ErrorMessage)
 	}
+	if runUrl != "" {
+		fmt.Printf("Successfully triggered CloudBees workflow. Triggered CloudBees run link: %v ", runUrl)
+	}
 	//fmt.Printf("error %v", err)
 	return nil
 }
@@ -269,7 +272,7 @@ func getCurrentBranchFromRef() (string, error) {
 		return strings.TrimPrefix(githubRef, "refs/heads/"), nil
 	}
 
-	return "", fmt.Errorf("Please specify the branch of the CloudBees workflow, as the current GitHub workflow is not triggered by a branch.")
+	return "", fmt.Errorf("Please specify the branch of the CloudBees workflow, as the calling GitHub workflow is not triggered by a branch.")
 }
 
 func writeGitHubOutput(runUrl string) error {
