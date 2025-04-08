@@ -24,7 +24,7 @@ jobs:
           #component-id: "395bb7a1-0380-429a-9638-3b33a5e6d026"
           #component-id: "invalid"
           #branch-name: "workflowTest1"
-          workflow-file-name: "tag.yaml"
+          workflow-file-name: "workflow.yaml"
           #workflow-inputs: '{"workflowinput1q": "test1"}'
 
       - name: Use runUrl output
