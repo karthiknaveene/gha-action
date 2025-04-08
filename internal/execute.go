@@ -207,7 +207,7 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 			//fmt.Println("Error unmarshaling response body:", err)
 		}
 		if errorResponse.Message == "" || errorResponse.Message == "permission denied" {
-			return errors.New(errorResponse.Message + ". Please provide a valid cloudbees pat token.")
+			return errors.New(errorResponse.Message + " Please provide a valid cloudbees pat token.")
 		}
 		return errors.New(errorResponse.Message)
 	}
@@ -243,7 +243,7 @@ func sendCloudEvent(cloudEvent cloudevents.Event, config *Config) error {
 
 	fmt.Println("CloudEvent sent successfully!")
 	if successResponse.ErrorMessage != "" {
-		fmt.Printf("Error while invoking CloudBees workflow: %v", successResponse.ErrorMessage)
+		fmt.Printf("Error while triggering CloudBees workflow: %v", successResponse.ErrorMessage)
 		//return fmt.Errorf("Error while invoking CloudBees workflow: %v", successResponse.ErrorMessage)
 	}
 	//fmt.Printf("error %v", err)
