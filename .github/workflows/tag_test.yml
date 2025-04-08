@@ -22,8 +22,8 @@ jobs:
           cloudbees-pat: ${{ secrets.MY_PAT }}
           #component-id: "395bb7a1-0380-429a-9638-3b33a5e6d026"
           #component-id: "invalid"
-          #branch-name: "test-branch"
-          workflow-file-name: "workflow1.yaml"
+          branch-name: "test-branch"
+          workflow-file-name: "workflow3.yaml"
          #workflow-inputs: '{"workflowinput1": "test1"}'
 
       - name: Use runUrl output
