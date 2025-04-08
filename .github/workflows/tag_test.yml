@@ -18,8 +18,8 @@ jobs:
         uses: karthiknaveene/gha-action@main
         id: go-action
         with :
-          cloudbees-url: "https://api.saas-preprod.beescloud.com/"
-          cloudbees-pat: ${{ secrets.MY_PAT }}
+          cloudbees-url: "https://api.saas-qa.beescloud.com/"
+          cloudbees-pat: ${{ secrets.QA_PAT }}
           #component-id: "395bb7a1-0380-429a-9638-3b33a5e6d026"
           #component-id: "invalid"
           branch-name: "test-branch"
