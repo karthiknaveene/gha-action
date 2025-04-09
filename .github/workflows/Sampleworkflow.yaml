@@ -93,7 +93,7 @@ jobs:
 
 
       - name: Run My Custom Go Action
-        uses: karthiknaveene/gha-action@main
+        uses: karthiknaveene/gha-action@test-branch
         id: go-action
         with:
           cloudbees-pat: ${{ secrets.QA_PAT }}
