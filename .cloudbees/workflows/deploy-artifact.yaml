@@ -10,6 +10,12 @@ on:
       image-version:
         type: string
         required: true
+      url:
+          type: string
+          required: true
+      digest:
+          type: string
+          required: true
 jobs:
   deploy:
     steps:
@@ -17,8 +23,8 @@ jobs:
         kind: deploy
         uses: cloudbees-io/register-deployed-artifact@v1
         with:
-          version: 1.0.2
-          url: docker.io/hddocker125/demo-service:1.0.2
-          digest: sha256:f5a550f786044c751bb52f6965081cfbe102c6c93a55249284fed4098a76972f
-          target-environment: production
-          name: demo-service
+          version: ${{ inputs.image-version }}
+          url:  ${{ inputs.url }}
+          digest:  ${{ inputs.digest }}
+          target-environment: QA
+          name:  ${{ inputs.image-name }}
