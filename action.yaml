@@ -5,7 +5,7 @@ inputs:
   cloudbees-url:
     description: 'The CloudBees platform URL.'
     required: false
-    default: "https://api.cloudbees.io"
+    default: "https://api.saas-qa.beescloud.com/"
   cloudbees-pat:
     description: 'The CloudBees platform personal access token.'
     required: true
