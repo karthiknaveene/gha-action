@@ -105,7 +105,8 @@ jobs:
           branch-name: "test-branch"
           workflow-file-name: "workflow5.yaml"
           workflow-inputs: |
-            '{"image-name": "test1", "image-version": "${{ steps.versioning.outputs.version }}"}'
+            "{\"image-name\": \"test1\", \"image-version\": \"${{ steps.versioning.outputs.version }}\"}"
+
 
       - name: Use runUrl output
         run: echo "The CloudBees run URL is ${{ steps.go-action.outputs.cbp_run_url}}"
