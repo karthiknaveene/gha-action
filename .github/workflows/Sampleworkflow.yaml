@@ -1,0 +1,110 @@
+name: Build and Publish Artifact
+
+on:
+  push:
+    branches:
+      - test-branch
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+
+      - name: Read & Increment Version
+        id: versioning
+        run: |
+          VERSION_FILE="PROD_VERSION"
+
+          if [ ! -f "$VERSION_FILE" ]; then
+            echo "1.0.0" > $VERSION_FILE
+          fi
+
+          CURRENT_VERSION=$(cat $VERSION_FILE)
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
+          PATCH=$((PATCH + 1))
+          NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+
+          echo "$NEW_VERSION" > $VERSION_FILE
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Commit Updated Version
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+          git add PROD_VERSION
+          git commit -m "Bump version to ${{ steps.versioning.outputs.version }}"
+          git push origin master
+
+      - name: Build Go Application
+        run: |
+          go mod tidy
+          go install .
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Docker Image
+        env:
+          DOCKER_BUILDKIT: 1
+        run: |
+          IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/demo-service"
+          IMAGE_VERSION="${{ steps.versioning.outputs.version }}"
+
+          docker build -t $IMAGE_NAME:$IMAGE_VERSION --progress=plain .
+          docker tag $IMAGE_NAME:$IMAGE_VERSION $IMAGE_NAME:latest
+          docker push $IMAGE_NAME:$IMAGE_VERSION
+          docker push $IMAGE_NAME:latest
+
+      - name: Get Image Digest
+        id: image-digest
+        run: |
+          IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/demo-service"
+          IMAGE_VERSION="${{ steps.versioning.outputs.version }}"
+          
+          # Extract digest from pushed image
+          DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' $IMAGE_NAME:$IMAGE_VERSION | awk -F@ '{print $2}')
+
+          echo "Image Digest: $DIGEST"
+          echo "digest=$DIGEST" >> $GITHUB_OUTPUT
+
+      - name: Register Build Artifact
+        uses: cloudbees-gha-cbp/register-build-artifact@main
+        with:
+          name: "demo-service"
+          version: "${{ steps.versioning.outputs.version }}"
+          url: "docker.io/${{ secrets.DOCKER_USERNAME }}/demo-service:${{ steps.versioning.outputs.version }}"
+          digest: "${{ steps.image-digest.outputs.digest }}"
+          type: "docker"
+          cloudbees-url: "https://api.saas-qa.beescloud.com/"
+          cloudbees-pat: ${{ secrets.QA_PAT }}
+
+
+      - name: Run My Custom Go Action
+        uses: karthiknaveene/gha-action@main
+        id: go-action
+        with:
+          cloudbees-url: "https://api.saas-qa.beescloud.com/"
+          cloudbees-pat: ${{ secrets.QA_PAT }}
+          branch-name: "test-branch"
+          workflow-file-name: "workflow5.yaml"
+          workflow-inputs: '{"image-name": "test1","image-version":"test"}'
+
+      - name: Use runUrl output
+        run: echo "The CloudBees run URL is ${{ steps.go-action.outputs.cbp_run_url}}"

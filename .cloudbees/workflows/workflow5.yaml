@@ -6,6 +6,13 @@ on:
     branches:
       - '**'
   workflow_dispatch:
+    inputs:
+      image-name:
+        type: string
+        required: true
+      image-version:
+        type: string
+        required: true
 
 jobs:
   build:
