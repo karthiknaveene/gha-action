@@ -1,0 +1,24 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: My workflow
+on:
+  workflow_dispatch:
+    inputs:
+      image-name:
+        type: string
+        required: true
+      image-version:
+        type: string
+        required: true
+jobs:
+  deploy:
+    steps:
+      - name: Say hello
+        kind: deploy
+        uses: cloudbees-io/register-deployed-artifact@v1
+        with:
+          version: 1.0.2
+          url: docker.io/hddocker125/demo-service:1.0.2
+          digest: sha256:f5a550f786044c751bb52f6965081cfbe102c6c93a55249284fed4098a76972f
+          target-environment: production
+          name: demo-service

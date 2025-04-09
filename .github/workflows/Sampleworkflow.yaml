@@ -26,7 +26,7 @@ jobs:
       - name: Read & Increment Version
         id: versioning
         run: |
-          VERSION_FILE="PROD_VERSION"
+          VERSION_FILE="QA_VERSION"
 
           if [ ! -f "$VERSION_FILE" ]; then
             echo "1.0.0" > $VERSION_FILE
@@ -45,7 +45,7 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
 
-          git add PROD_VERSION
+          git add QA_VERSION
           git commit -m "Bump version to ${{ steps.versioning.outputs.version }}"
           git push origin master
 
@@ -104,7 +104,11 @@ jobs:
           cloudbees-pat: ${{ secrets.QA_PAT }}
           branch-name: "test-branch"
           workflow-file-name: "workflow5.yaml"
-          workflow-inputs: '{"image-name": "test1","image-version":"test"}'
+          workflow-inputs: >
+            ${{ toJson({
+              image-name: "test1",
+              image-version: steps.versioning.outputs.version
+            }) }}
 
       - name: Use runUrl output
         run: echo "The CloudBees run URL is ${{ steps.go-action.outputs.cbp_run_url}}"
