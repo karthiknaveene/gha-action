@@ -1,40 +1,40 @@
-name: 'Trigger CloudBees Workflow'
-description: 'Trigger CloudBees workflow from GitHub Actions workflow'
+name: 'Run Workflow'
+description: 'Run CloudBees workflow from GitHub Actions workflow'
 
 inputs:
   cloudbees-url:
     description: 'The CloudBees platform URL.'
-    required: true
+    required: false
+    default: "https://api.cloudbees.io"
   cloudbees-pat:
     description: 'The CloudBees platform personal access token.'
     required: true
   component-id:
-    description: 'The Component-id of the CloudBees workflow to be triggered. '
+    description: 'The Component-id of the CloudBees workflow to be run. '
     required: false
   branch-name:
-    description: 'The branch of the CloudBees workflow to be triggered.'
+    description: 'The branch name of the CloudBees workflow to be run.'
     required: false
   workflow-file-name:
-    description: 'The name of the CloudBees workflow to be triggered.'
+    description: 'The name of the CloudBees workflow to be run.'
     required: true
   workflow-inputs:
-    description: 'Input parameters to be passed to trigger the workflow. Represented as key-value pairs, where keys and values are both strings.'
+    description: 'Input parameters required to run the workflow, formatted as JSON data in key/value pairs.'
     required: false
 
 outputs:
   cbp_run_url:
-    description: "The cbp run url"
+    description: "The triggered cbp run url"
    
 runs:
   using: "docker"
   image: "docker://ghcr.io/karthiknaveene/gha-action/my-app:latest"  # @TODO: Add the image
   env:
-        CLOUDBEES_API_URL: ${{ inputs.cloudbees-url }}
-        CLOUDBEES_API_TOKEN: ${{ inputs.cloudbees-pat }}
-        COMPONENT_ID: ${{ inputs.component-id }}
-        BRANCH_NAME: ${{ inputs.branch-name }}
-        WORKFLOW_FILE_NAME: ${{ inputs.workflow-file-name }}
-        WORKFLOW_INPUTS: ${{ inputs.workflow-inputs }}
-
+    CLOUDBEES_API_URL: ${{ inputs.cloudbees-url }}
+    CLOUDBEES_API_TOKEN: ${{ inputs.cloudbees-pat }}
+    COMPONENT_ID: ${{ inputs.component-id }}
+    BRANCH_NAME: ${{ inputs.branch-name }}
+    WORKFLOW_FILE_NAME: ${{ inputs.workflow-file-name }}
+    WORKFLOW_INPUTS: ${{ inputs.workflow-inputs }}
   
 
