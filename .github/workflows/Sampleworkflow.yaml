@@ -40,14 +40,14 @@ jobs:
           echo "$NEW_VERSION" > $VERSION_FILE
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
 
-      - name: Commit Updated Version
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+      # - name: Commit Updated Version
+      #   run: |
+      #     git config --global user.name "github-actions"
+      #     git config --global user.email "github-actions@github.com"
 
-          git add QA_VERSION
-          git commit -m "Bump version to ${{ steps.versioning.outputs.version }}"
-          git push origin master
+      #     git add QA_VERSION
+      #     git commit -m "Bump version to ${{ steps.versioning.outputs.version }}"
+      #     git push origin master
 
       - name: Build Go Application
         run: |
