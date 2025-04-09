@@ -287,7 +287,12 @@ func writeGitHubOutput(runUrl string) error {
 		fmt.Printf("Error opening GITHUB_OUTPUT file: %v", err)
 		return nil
 	}
-	defer outputFile.Close()
+	defer func(outputFile *os.File) {
+		err := outputFile.Close()
+		if err != nil {
+
+		}
+	}(outputFile)
 
 	// Write the output to the GITHUB_OUTPUT file in the format expected by GitHub Actions
 	_, err = fmt.Fprintf(outputFile, "cbp_run_url=%s\n", runUrl)
