@@ -83,6 +83,9 @@ jobs:
 
           echo "Image Digest: $DIGEST"
           echo "digest=$DIGEST" >> $GITHUB_OUTPUT
+          
+          URL="docker.io/${{ secrets.DOCKER_USERNAME }}/demo-service:${{ steps.versioning.outputs.version }}"
+          echo "url=$URL" >> $GITHUB_OUTPUT
 
       - name: Register Build Artifact
         uses: cloudbees-gha-cbp/register-build-artifact@main
@@ -96,6 +99,7 @@ jobs:
           cloudbees-pat: ${{ secrets.QA_PAT }}
 
 
+
       - name: Run My Custom Go Action
         uses: karthiknaveene/gha-action@main
         id: go-action
@@ -104,7 +108,7 @@ jobs:
           cloudbees-pat: ${{ secrets.QA_PAT }}
           branch-name: "test-branch"
           workflow-file-name: "deploy-artifact.yaml"
-          workflow-inputs: '{"image-name": "${{ steps.versioning.outputs.version }}", "image-version": ${{ steps.versioning.outputs.version }}, "digest":"${{ steps.image-digest.outputs.digest }}", "url":"docker.io/${{ secrets.DOCKER_USERNAME }}/demo-service:${{ steps.versioning.outputs.version }}" }'
+          workflow-inputs: '{"image-name": "test-service", "image-version": ${{ steps.versioning.outputs.version }}, "digest":"${{ steps.image-digest.outputs.digest }}", "url":"${{ steps.image-digest.outputs.url }}" }'
 
       - name: Use runUrl output
         run: echo "The CloudBees run URL is ${{ steps.go-action.outputs.cbp_run_url}}"
