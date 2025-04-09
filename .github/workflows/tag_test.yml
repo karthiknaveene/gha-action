@@ -15,7 +15,7 @@ jobs:
         run: echo "MY_PAT=${{ secrets.MY_PAT }}"
 
       - name: Run My Custom Go Action
-        uses: karthiknaveene/gha-action@main
+        uses: karthiknaveene/gha-action@test-branch
         id: go-action
         with :
           #cloudbees-url: "https://api.saas-qa.beescloud.com/"
