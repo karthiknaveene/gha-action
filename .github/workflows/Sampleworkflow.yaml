@@ -3,7 +3,7 @@ name: Build and Publish Artifact
 on:
   push:
     branches:
-      - test-branchq
+      - test-branch
 
 permissions:
   contents: write
@@ -96,9 +96,7 @@ jobs:
         uses: karthiknaveene/gha-action@main
         id: go-action
         with:
-          cloudbees-url: "https://api.saas-qa.beescloud.com/"
           cloudbees-pat: ${{ secrets.QA_PAT }}
-          branch-name: "test-branch"
           workflow-file-name: "deploy-artifact.yaml"
           workflow-inputs: '{"image-name": "demo-service", "image-version": "${{ steps.versioning.outputs.version }}", "digest":"${{ steps.image-digest.outputs.digest }}", "url":"${{ steps.image-digest.outputs.url }}" }'
 
