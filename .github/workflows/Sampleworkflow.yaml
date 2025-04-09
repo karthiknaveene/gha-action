@@ -104,8 +104,7 @@ jobs:
           cloudbees-pat: ${{ secrets.QA_PAT }}
           branch-name: "test-branch"
           workflow-file-name: "workflow5.yaml"
-          workflow-inputs: >
-            '{"image-name": "test1", "image-version": "${{ steps.versioning.outputs.version }}"}'
+          workflow-inputs: '{"image-name": "test1", "image-version": "1.0.0"}'
 
       - name: Use runUrl output
         run: echo "The CloudBees run URL is ${{ steps.go-action.outputs.cbp_run_url}}"
