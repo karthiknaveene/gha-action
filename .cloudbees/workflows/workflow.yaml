@@ -13,8 +13,8 @@ jobs:
       - name: checkout-source-code
         uses: cloudbees-io/checkout@v1
         with:
-          repository: calculi-corp/template-go-testing
-          ref: main
+          repository: karthiknaveene/gha-action
+          ref: go
           token: ${{ secrets.GIT_PAT }}
       
       - name: Get-Test-Reports
