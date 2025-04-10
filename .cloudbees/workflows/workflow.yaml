@@ -17,17 +17,17 @@ jobs:
           ref: go
           token: ${{ secrets.GIT_PAT }}
       
-      - name: Get-Test-Reports
-        uses: docker://golang:1.22-alpine
-        shell: sh
-        run: |
-          export PATH="${PATH}:${GOPATH}/bin"
-          go install github.com/jstemmer/go-junit-report@latest
-          go install github.com/ctrf-io/go-ctrf-json-reporter/cmd/go-ctrf-json-reporter@latest
-          mkdir ${{ cloudbees.workspace }}/test_reports
-          go clean
-          go test -v 2>&1 ./... | go-junit-report > ${{ cloudbees.workspace }}/test_reports/report.xml
-          go test -json ./... | go-ctrf-json-reporter -output ${{ cloudbees.workspace }}/test_reports/report.json
+      # - name: Get-Test-Reports
+      #   uses: docker://golang:1.22-alpine
+      #   shell: sh
+      #   run: |
+      #     export PATH="${PATH}:${GOPATH}/bin"
+      #     go install github.com/jstemmer/go-junit-report@latest
+      #     go install github.com/ctrf-io/go-ctrf-json-reporter/cmd/go-ctrf-json-reporter@latest
+      #     mkdir ${{ cloudbees.workspace }}/test_reports1
+      #     go clean
+      #     go test -v 2>&1 ./... | go-junit-report > ${{ cloudbees.workspace }}/test_reports1/report.xml
+      #     go test -json ./... | go-ctrf-json-reporter -output ${{ cloudbees.workspace }}/test_reports/report.json
   
       - name: GO-Native-Test
         uses: cloudbees-io/publish-test-results@v1
