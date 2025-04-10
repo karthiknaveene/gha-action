@@ -1,23 +1,36 @@
 apiVersion: automation.cloudbees.io/v1alpha1
 kind: workflow
-name: My workflow
+name: trigger-go-test-result-conversion
+
 on:
   push:
     branches:
-      - '**'
-  workflow_dispatch:
-    inputs:
-      workflowinput1:
-        type: string
-        required: true
+      - go
+
 jobs:
-  build:
+  GO-Native-Test:
     steps:
-      - name: Say hello
-        uses: docker://golang:1.20.3-alpine3.17
+      - name: checkout-source-code
+        uses: cloudbees-io/checkout@v1
+        with:
+          repository: calculi-corp/template-go-testing
+          ref: main
+          token: ${{ secrets.GIT_PAT }}
+      
+      - name: Get-Test-Reports
+        uses: docker://golang:1.22-alpine
         shell: sh
         run: |
-          echo "Hello World"
-          echo "sleep"
-          sleep 20
-          echo "Good bye"
+          export PATH="${PATH}:${GOPATH}/bin"
+          go install github.com/jstemmer/go-junit-report@latest
+          go install github.com/ctrf-io/go-ctrf-json-reporter/cmd/go-ctrf-json-reporter@latest
+          mkdir ${{ cloudbees.workspace }}/test_reports
+          go clean
+          go test -v 2>&1 ./... | go-junit-report > ${{ cloudbees.workspace }}/test_reports/report.xml
+          go test -json ./... | go-ctrf-json-reporter -output ${{ cloudbees.workspace }}/test_reports/report.json
+  
+      - name: GO-Native-Test
+        uses: cloudbees-io/publish-test-results@v1
+        with:
+          folder-name: ${{ cloudbees.workspace }}/test_reports
+          test-type: go

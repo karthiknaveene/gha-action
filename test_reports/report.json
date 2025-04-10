@@ -1,0 +1,84 @@
+{
+    "results": {
+      "tool": {
+        "name": "gotest"
+      },
+      "summary": {
+        "tests": 13,
+        "passed": 8,
+        "failed": 4,
+        "pending": 0,
+        "skipped": 1,
+        "other": 0,
+        "start": 0,
+        "stop": 0
+      },
+      "tests": [
+        {
+          "name": "TestSkip",
+          "status": "skipped",
+          "duration": 0
+        },
+        {
+          "name": "TestAdd/ADD_Success",
+          "status": "passed",
+          "duration": 0.05
+        },
+        {
+          "name": "TestAdd/ADD_Failure",
+          "status": "passed",
+          "duration": 0.05
+        },
+        {
+          "name": "TestAdd",
+          "status": "passed",
+          "duration": 0.1
+        },
+        {
+          "name": "TestMul/MUL_Success",
+          "status": "passed",
+          "duration": 0.05
+        },
+        {
+          "name": "TestSub/SUB_Success",
+          "status": "passed",
+          "duration": 0.05
+        },
+        {
+          "name": "TestMul/MUL_Failure",
+          "status": "passed",
+          "duration": 0.05
+        },
+        {
+          "name": "TestMul",
+          "status": "passed",
+          "duration": 0.1
+        },
+        {
+          "name": "TestSub/SUB_Failure",
+          "status": "failed",
+          "duration": 0.05
+        },
+        {
+          "name": "TestSub",
+          "status": "failed",
+          "duration": 0.1
+        },
+        {
+          "name": "TestDiv/DIV_Success",
+          "status": "passed",
+          "duration": 0.05
+        },
+        {
+          "name": "TestDiv/DIV_Failure",
+          "status": "failed",
+          "duration": 0.05
+        },
+        {
+          "name": "TestDiv",
+          "status": "failed",
+          "duration": 0.1
+        }
+      ]
+    }
+  }

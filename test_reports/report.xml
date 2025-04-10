@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite tests="7" failures="2" time="1.100" name="github.com/calculi-corp/go-test-result-conversion/internal/actions/test_data/test_suite_1">
+        <properties>
+            <property name="go.version" value="go1.22.0"></property>
+        </properties>
+        <testcase classname="test_suite_1" name="TestSkip" time="0.000">
+            <skipped message="    calculator_test.go:13: skiping this test case"></skipped>
+        </testcase>
+        <testcase classname="test_suite_1" name="TestAdd" time="0.100"></testcase>
+        <testcase classname="test_suite_1" name="TestAdd/ADD_Success" time="0.050"></testcase>
+        <testcase classname="test_suite_1" name="TestAdd/ADD_Failure" time="0.050"></testcase>
+        <testcase classname="test_suite_1" name="TestSub" time="0.100">
+            <failure message="Failed" type=""></failure>
+        </testcase>
+        <testcase classname="test_suite_1" name="TestSub/SUB_Success" time="0.050"></testcase>
+        <testcase classname="test_suite_1" name="TestSub/SUB_Failure" time="0.050">
+            <failure message="Failed" type="">    calculator_test.go:38: &#xA;=== NAME  TestSub&#xA;    calculator_test.go:39: Test SUB Failure case failed</failure>
+        </testcase>
+    </testsuite>
+    <testsuite tests="6" failures="2" time="0.363" name="github.com/calculi-corp/go-test-result-conversion/internal/actions/test_data/test_suite_2">
+        <properties>
+            <property name="go.version" value="go1.22.0"></property>
+        </properties>
+        <testcase classname="test_suite_2" name="TestMul" time="0.100"></testcase>
+        <testcase classname="test_suite_2" name="TestMul/MUL_Success" time="0.050"></testcase>
+        <testcase classname="test_suite_2" name="TestMul/MUL_Failure" time="0.050"></testcase>
+        <testcase classname="test_suite_2" name="TestDiv" time="0.100">
+            <failure message="Failed" type=""></failure>
+        </testcase>
+        <testcase classname="test_suite_2" name="TestDiv/DIV_Success" time="0.050"></testcase>
+        <testcase classname="test_suite_2" name="TestDiv/DIV_Failure" time="0.050">
+            <failure message="Failed" type="">    calculator_test.go:31: &#xA;=== NAME  TestDiv&#xA;    calculator_test.go:32: Test DIV Failure case failed</failure>
+        </testcase>
+    </testsuite>
+</testsuites>
