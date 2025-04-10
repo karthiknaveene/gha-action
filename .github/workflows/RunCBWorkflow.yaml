@@ -3,7 +3,7 @@ name: Build and Publish Artifact
 on:
   push:
     branches:
-      - test-branch
+      - test-branchq
 
 permissions:
   contents: write
