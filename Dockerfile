@@ -40,13 +40,9 @@
 
 # ENTRYPOINT ["/external-ci-service"]
 
-FROM gcr.io/distroless/base:latest
+FROM gcr.io/distroless/static:nonroot
 
-# Set environment for Go modules
 WORKDIR /app
-COPY . .
+COPY gha_run_cbp_workflow_app /app/gha_run_cbp_workflow_app
 
-COPY --from=builder /app/action-app /app/action-app
-
-# Define the entrypoint to run the app
-ENTRYPOINT ["/app/action-app"]
+CMD ["/app/gha_run_cbp_workflow_app"]
