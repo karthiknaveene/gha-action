@@ -88,15 +88,15 @@ jobs:
           digest: "${{ steps.image-digest.outputs.digest }}"
           type: "docker"
           #cloudbees-url: "https://api.saas-qa.beescloud.com/"
-          cloudbees-pat: ${{ secrets.QA_PAT }}
+          cloudbees-pat: ${{ secrets.PROD_PAT }}
 
 
 
       - name: Run My Custom Go Action
-        uses: karthiknaveene/gha-action@test-branch
+        uses: cloudbees-gha-cbp/run-cloudbees-workflow@CBP-10930-v1
         id: go-action
         with:
-          cloudbees-pat: ${{ secrets.QA_PAT }}
+          cloudbees-pat: ${{ secrets.PROD_PAT }}
           workflow-file-name: "deploy-artifact.yaml"
           workflow-inputs: '{"image-name": "demo-service", "image-version": "${{ steps.versioning.outputs.version }}", "digest":"${{ steps.image-digest.outputs.digest }}", "url":"${{ steps.image-digest.outputs.url }}" }'
 
