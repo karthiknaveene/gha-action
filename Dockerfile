@@ -47,7 +47,7 @@
 
 # CMD ["/app/action-app"]
 
-FROM golang:1.24.1-alpine AS GOLANG
+FROM gcr.io/distroless/static:nonroot
 
 # LABEL maintainer=Cloudbees-pod-7 \
 #     email=engineering@cloudbees.io
