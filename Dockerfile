@@ -42,7 +42,11 @@
 
 FROM gcr.io/distroless/base:nonroot
 
+# Set environment for Go modules
 WORKDIR /app
-COPY gha_run_cbp_workflow_app /app/gha_run_cbp_workflow_app
+COPY . .
 
-CMD ["/app/gha_run_cbp_workflow_app"]
+COPY --from=builder /app/action-app /app/action-app
+
+# Define the entrypoint to run the app
+ENTRYPOINT ["/app/action-app"]
