@@ -3,7 +3,7 @@ name: Build and Publish Artifact
 on:
   push:
     branches:
-      - test-branch
+      - run-cloudbees-workflow
 
 permissions:
   contents: write
@@ -26,7 +26,7 @@ jobs:
       - name: Read & Increment Version
         id: versioning
         run: |
-          VERSION_FILE="QA_VERSION"
+          VERSION_FILE="VERSION"
 
           if [ ! -f "$VERSION_FILE" ]; then
             echo "1.0.0" > $VERSION_FILE
@@ -87,16 +87,14 @@ jobs:
           url: "docker.io/${{ secrets.DOCKER_USERNAME }}/demo-service:${{ steps.versioning.outputs.version }}"
           digest: "${{ steps.image-digest.outputs.digest }}"
           type: "docker"
-          #cloudbees-url: "https://api.saas-qa.beescloud.com/"
           cloudbees-pat: ${{ secrets.PROD_PAT }}
 
 
 
-      - name: Run My Custom Go Action
+      - name: Run CloudBees Workflow
         uses: cloudbees-gha-cbp/run-cloudbees-workflow@CBP-10930-v1
         id: go-action
         with:
-          #cloudbees-url: "https://api.saas-qa.beescloud.com/"
           cloudbees-pat: ${{ secrets.PROD_PAT }}
           workflow-file-name: "deploy-artifact.yaml"
           workflow-inputs: '{"image-name": "demo-service", "image-version": "${{ steps.versioning.outputs.version }}", "digest":"${{ steps.image-digest.outputs.digest }}", "url":"${{ steps.image-digest.outputs.url }}" }'
