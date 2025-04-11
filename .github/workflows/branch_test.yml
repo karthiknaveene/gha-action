@@ -15,7 +15,7 @@ jobs:
         uses: cloudbees-gha-cbp/run-cloudbees-workflow@CBP-10930
         id: go-action
         with :
-          #cloudbees-url: "https://api.saas-qa.beescloud.com/"
+          cloudbees-url: "https://api.saas-qa.beescloud.com/"
           #cloudbees-url: "https://api.saas-preprod.beescloud.com/"
           #cloudbees-pat: "invalid"
           #component-id: "395bb7a1-0380-429a-9638-3b33a5e6d026"
