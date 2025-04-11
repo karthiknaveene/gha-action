@@ -282,7 +282,7 @@ func getCurrentBranchFromRef() (string, error) {
 
 func writeGitHubOutput(runUrl string) error {
 	// Open the GITHUB_OUTPUT file to append the output
-	outputFile, err := os.OpenFile(os.Getenv("GITHUB_OUTPUT"), os.O_APPEND|os.O_WRONLY, 0600)
+	outputFile, err := os.OpenFile(os.Getenv("GITHUB_OUTPUT"), os.O_APPEND|os.O_WRONLY, 0640)
 	if err != nil {
 		fmt.Printf("Error opening GITHUB_OUTPUT file: %v", err)
 		return nil
