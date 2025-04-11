@@ -63,4 +63,4 @@ COPY . .
 
 CMD ["/app/action-app"]
 
-ENTRYPOINT [ "go", "run" ,"main.go" ]
+ENTRYPOINT ["/app/action-app"]
