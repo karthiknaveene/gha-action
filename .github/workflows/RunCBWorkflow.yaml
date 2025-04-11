@@ -3,7 +3,7 @@ name: Build and Publish Artifact
 on:
   push:
     branches:
-      - run-cloudbees-workflowq
+      - run-cloudbees-workflow
 
 permissions:
   contents: write
