@@ -40,9 +40,9 @@ ENTRYPOINT ["/app/action-app"]
 
 # ENTRYPOINT ["/external-ci-service"]
 
-# FROM gcr.io/distroless/static:nonroot
+FROM gcr.io/distroless/static:nonroot
 
-# WORKDIR /app
-# COPY gha_run_cbp_workflow_app /app/gha_run_cbp_workflow_app
+WORKDIR /app
+COPY action-app /app/action-app
 
-# CMD ["/app/gha_run_cbp_workflow_app"]
+CMD ["/app/action-app"]
