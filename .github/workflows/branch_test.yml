@@ -11,8 +11,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: Set permission for GITHUB_OUTPUT
+        run: sudo chmod o+w "$GITHUB_OUTPUT"
+
       - name: Run My Custom Go Action
-        uses: cloudbees-gha-cbp/run-cloudbees-workflow@test
+        uses: cloudbees-gha-cbp/run-cloudbees-workflow@CBP-10930
         id: go-action
         with :
           #cloudbees-url:  "https://api.cloudbees.io/a"
