@@ -55,7 +55,7 @@ FROM gcr.io/distroless/static:nonroot
 # RUN apk "upgrade" libssl3 libcrypto3
 
 
-RUN mkdir /app
+#RUN mkdir /app
 WORKDIR /app
 COPY . .
 
