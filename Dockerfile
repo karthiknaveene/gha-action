@@ -40,9 +40,26 @@
 
 # ENTRYPOINT ["/external-ci-service"]
 
-FROM gcr.io/distroless/static:nonroot
+# FROM gcr.io/distroless/static:nonroot
 
+# WORKDIR /app
+# COPY action-app /app/action-app
+
+# CMD ["/app/action-app"]
+
+FROM golang:1.24.1-alpine AS GOLANG
+
+# LABEL maintainer=Cloudbees-pod-7 \
+#     email=engineering@cloudbees.io
+
+RUN apk "upgrade" libssl3 libcrypto3
+
+
+RUN mkdir /app
 WORKDIR /app
-COPY action-app /app/action-app
 
-CMD ["/app/action-app"]
+COPY action-app" /app
+
+CMD ["/app/action-app""]
+
+ENTRYPOINT [ "go", "run" ,"main.go" ]
