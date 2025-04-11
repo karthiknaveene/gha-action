@@ -65,20 +65,28 @@
 
 # ENTRYPOINT ["/app/action-app"]
 
-FROM golang:1.24.1-alpine AS GOLANG
+# FROM golang:1.24.1-alpine AS GOLANG
 
-# LABEL maintainer=Cloudbees-pod-7 \
-#     email=engineering@cloudbees.io
+# # LABEL maintainer=Cloudbees-pod-7 \
+# #     email=engineering@cloudbees.io
 
-RUN apk "upgrade" libssl3 libcrypto3
+# RUN apk "upgrade" libssl3 libcrypto3
 
 
-RUN mkdir /app
+# RUN mkdir /app
+# WORKDIR /app
+# COPY . .
+
+# # COPY action-app /app
+
+# # CMD ["/app/action-app"]
+
+# ENTRYPOINT ["/app/action-app"]
+
+
+FROM gcr.io/distroless/static:nonroot
+
 WORKDIR /app
-COPY . .
+COPY gha_run_cbp_workflow_app /app/gha_run_cbp_workflow_app
 
-# COPY action-app /app
-
-# CMD ["/app/action-app"]
-
-ENTRYPOINT ["/app/action-app"]
+CMD ["/app/gha_run_cbp_workflow_app"]
