@@ -3,7 +3,7 @@ name: Build and Publish Artifact
 on:
   push:
     branches:
-      - run-cloudbees-workflow
+      - run-cloudbees-workflowq
 
 permissions:
   contents: write
@@ -82,7 +82,7 @@ jobs:
       - name: Register Build Artifact
         uses: cloudbees-gha-cbp/register-build-artifact@main
         with:
-          name: "test-service"
+          name: "demo-run-workflow"
           version: "${{ steps.versioning.outputs.version }}"
           url: "docker.io/${{ secrets.DOCKER_USERNAME }}/demo-service:${{ steps.versioning.outputs.version }}"
           digest: "${{ steps.image-digest.outputs.digest }}"
@@ -97,7 +97,7 @@ jobs:
         with:
           cloudbees-pat: ${{ secrets.PROD_PAT }}
           workflow-file-name: "deploy-artifact.yaml"
-          workflow-inputs: '{"image-name": "test-service", "image-version": "${{ steps.versioning.outputs.version }}", "digest":"${{ steps.image-digest.outputs.digest }}", "url":"${{ steps.image-digest.outputs.url }}" }'
+          workflow-inputs: '{"image-name": "demo-run-workflow", "image-version": "${{ steps.versioning.outputs.version }}", "digest":"${{ steps.image-digest.outputs.digest }}", "url":"${{ steps.image-digest.outputs.url }}" }'
 
       - name: Use runUrl output
         run: echo "The CloudBees run URL is ${{ steps.go-action.outputs.cbp_run_url}}"
