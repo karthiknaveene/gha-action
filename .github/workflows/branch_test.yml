@@ -24,7 +24,7 @@ jobs:
           #workflow-inputs: '{"workflowinput1": "test1"}'
           cloudbees-pat: ${{ secrets.PROD_PAT }}
           #component-id: "20360000-ce0e-4c39-ace8-65a6f0803bee"
-          #branch-name: "main"
+          branch-name: "invaldi"
           workflow-file-name: "workflow6.yaml"
 
       - name: Use runUrl output
