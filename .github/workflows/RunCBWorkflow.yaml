@@ -3,7 +3,7 @@ name: Build and Publish Artifact
 on:
   push:
     branches:
-      - run-cloudbees-workflowq
+      - run-cloudbees-workflow
 
 permissions:
   contents: write
@@ -92,7 +92,7 @@ jobs:
 
 
       - name: Run CloudBees Workflow
-        uses: cloudbees-gha-cbp/run-cloudbees-workflow@CBP-10930-v1
+        uses: cloudbees-gha-cbp/run-cloudbees-workflow@karthiknaveene-patch-3
         id: go-action
         with:
           cloudbees-pat: ${{ secrets.PROD_PAT }}
