@@ -60,6 +60,6 @@ WORKDIR /app
 
 COPY action-app" /app
 
-CMD ["/app/action-app""]
+CMD ["/app/action-app"]
 
 ENTRYPOINT [ "go", "run" ,"main.go" ]
