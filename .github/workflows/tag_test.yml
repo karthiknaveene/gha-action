@@ -19,7 +19,7 @@ jobs:
         id: go-action
         with :
           #cloudbees-url: "https://api.saas-qa.beescloud.com/"
-          cloudbees-pat: ${{ secrets.QA_PAT }}
+          cloudbees-pat: ${{ secrets.PROD_PAT }}
           #component-id: "395bb7a1-0380-429a-9638-3b33a5e6d026"
           #component-id: "invalid"
           branch-name: "test-branch"
