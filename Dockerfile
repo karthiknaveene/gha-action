@@ -58,7 +58,7 @@ RUN apk "upgrade" libssl3 libcrypto3
 RUN mkdir /app
 WORKDIR /app
 
-COPY action-app" /app
+COPY action-app /app
 
 CMD ["/app/action-app"]
 
