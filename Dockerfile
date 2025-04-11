@@ -52,7 +52,7 @@ FROM gcr.io/distroless/static:nonroot
 # LABEL maintainer=Cloudbees-pod-7 \
 #     email=engineering@cloudbees.io
 
-RUN apk "upgrade" libssl3 libcrypto3
+# RUN apk "upgrade" libssl3 libcrypto3
 
 
 RUN mkdir /app
