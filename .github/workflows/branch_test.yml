@@ -12,7 +12,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set permission for GITHUB_OUTPUT
-        run: sudo chmod o+w "$GITHUB_OUTPUT"
+        run: |
+          # Ensure that the GITHUB_OUTPUT file is writable
+          sudo chmod o+w "$GITHUB_OUTPUT" || echo "Unable to change permissions on GITHUB_OUTPUT"
 
       - name: Run My Custom Go Action
         uses: cloudbees-gha-cbp/run-cloudbees-workflow@CBP-10930
