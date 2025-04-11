@@ -21,5 +21,5 @@ FROM gcr.io/distroless/static:nonroot
 WORKDIR /app
 COPY . .
 
-
-CMD ["/app/action-app"]
+COPY --from=builder /app/action-app /app/action-app
+ENTRYPOINT ["/app/action-app"]
