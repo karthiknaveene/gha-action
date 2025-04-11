@@ -3,7 +3,7 @@ name: Test My Go Action
 on:
    push:
     branches:
-      - test-branchq
+      - test-branch
 jobs:
   run-go-action:
     runs-on: ubuntu-latest
@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run My Custom Go Action
-        uses: cloudbees-gha-cbp/run-cloudbees-workflow@CBP-10930-v1
+        uses: cloudbees-gha-cbp/run-cloudbees-workflow@test
         id: go-action
         with :
           #cloudbees-url:  "https://api.cloudbees.io/a"
@@ -26,6 +26,8 @@ jobs:
           #component-id: "20360000-ce0e-4c39-ace8-65a6f0803bee"
           #branch-name: "main"
           workflow-file-name: "workflow6.yaml"
+        env:
+          GITHUB_OUTPUT: ${{ GITHUB_OUTPUT }}
 
       - name: Use runUrl output
         run: echo "The CloudBees run URL is ${{ steps.go-action.outputs.cbp_run_url}}"
