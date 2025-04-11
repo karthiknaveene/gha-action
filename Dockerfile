@@ -40,7 +40,7 @@
 
 # ENTRYPOINT ["/external-ci-service"]
 
-FROM gcr.io/distroless/base:nonroot
+FROM gcr.io/distroless/base:latest
 
 # Set environment for Go modules
 WORKDIR /app
