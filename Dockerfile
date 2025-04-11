@@ -19,6 +19,7 @@
 FROM gcr.io/distroless/static:nonroot
 
 WORKDIR /app
-COPY gha_run_cbp_workflow_app /app/gha_run_cbp_workflow_app
+COPY . .
 
-CMD ["/app/gha_run_cbp_workflow_app"]
+
+CMD ["/app/action-app"]
