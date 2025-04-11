@@ -16,9 +16,9 @@ jobs:
         id: go-action
         with :
           cloudbees-pat: ${{ secrets.PROD_PAT }}
-          workflow-file-name: "workflow6.yaml"
-        env:
-          GITHUB_OUTPUT: $GITHUB_OUTPUT
+          component-id: "20360000-ce0e-4c39-ace8-65a6f0803bee"
+          branch-name: "test"
+          workflow-file-name: "cb-workflow.yaml"
 
       - name: Use runUrl output
         run: echo "The CloudBees run URL is ${{ steps.go-action.outputs.cbp_run_url}}"
