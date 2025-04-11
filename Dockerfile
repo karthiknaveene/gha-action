@@ -35,8 +35,7 @@ COPY --from=builder /usr/bin/git /usr/bin/git
 COPY --from=builder /lib/ /lib/
 COPY --from=builder /usr/lib/ /usr/lib/
 COPY --from=builder /etc/ssl/certs/ /etc/ssl/certs/
-
 # Copy the service binary
-COPY --from=builder /app/action-app /app/action-app
+COPY external-ci-service /
 
-ENTRYPOINT ["/app/action-app"]
+ENTRYPOINT ["/external-ci-service"]
