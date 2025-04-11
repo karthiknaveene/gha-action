@@ -87,8 +87,8 @@ jobs:
           url: "docker.io/${{ secrets.DOCKER_USERNAME }}/demo-service:${{ steps.versioning.outputs.version }}"
           digest: "${{ steps.image-digest.outputs.digest }}"
           type: "docker"
-          cloudbees-url: "https://api.saas-qa.beescloud.com/"
-          cloudbees-pat: ${{ secrets.QA_PAT }}
+          #cloudbees-url: "https://api.saas-qa.beescloud.com/"
+          cloudbees-pat: ${{ secrets.PROD_PAT }}
 
 
 
@@ -96,8 +96,8 @@ jobs:
         uses: cloudbees-gha-cbp/run-cloudbees-workflow@CBP-10930-v1
         id: go-action
         with:
-          cloudbees-url: "https://api.saas-qa.beescloud.com/"
-          cloudbees-pat: ${{ secrets.QA_PAT }}
+          #cloudbees-url: "https://api.saas-qa.beescloud.com/"
+          cloudbees-pat: ${{ secrets.PROD_PAT }}
           workflow-file-name: "deploy-artifact.yaml"
           workflow-inputs: '{"image-name": "demo-service", "image-version": "${{ steps.versioning.outputs.version }}", "digest":"${{ steps.image-digest.outputs.digest }}", "url":"${{ steps.image-digest.outputs.url }}" }'
 
