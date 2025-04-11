@@ -16,10 +16,27 @@
 # # Define the entrypoint to run the app
 # ENTRYPOINT ["/app/action-app"]
 
-FROM gcr.io/distroless/static:nonroot
+FROM debian:bookworm-slim AS builder
 
-WORKDIR /app
-COPY . .
+# Install git and necessary certificates
+RUN apt-get update && apt-get install -y \
+    git \
+    ca-certificates \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# Use 'base:nonroot' instead of 'static:nonroot' for compatibility
+FROM gcr.io/distroless/base:nonroot
+
+# LABEL maintainer=Cloudbees \
+#     email=engineering@cloudbees.io
+
+# Copy Git binary and dependencies
+COPY --from=builder /usr/bin/git /usr/bin/git
+COPY --from=builder /lib/ /lib/
+COPY --from=builder /usr/lib/ /usr/lib/
+COPY --from=builder /etc/ssl/certs/ /etc/ssl/certs/
+
+# Copy the service binary
 COPY --from=builder /app/action-app /app/action-app
+
 ENTRYPOINT ["/app/action-app"]
