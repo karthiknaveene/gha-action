@@ -28,7 +28,7 @@ outputs:
    
 runs:
   using: "docker"
-  image: "docker://ghcr.io/karthiknaveene/gha-action/gha-run-cbp-workflow:latest"  # @TODO: Add the image
+  image: "docker://ghcr.io/karthiknaveene/gha-action/my-app:latest"  # @TODO: Add the image
   env:
     CLOUDBEES_API_URL: ${{ inputs.cloudbees-url }}
     CLOUDBEES_API_TOKEN: ${{ inputs.cloudbees-pat }}
@@ -36,5 +36,4 @@ runs:
     BRANCH_NAME: ${{ inputs.branch-name }}
     WORKFLOW_FILE_NAME: ${{ inputs.workflow-file-name }}
     WORKFLOW_INPUTS: ${{ inputs.workflow-inputs }}
-  
 
