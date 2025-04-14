@@ -16,7 +16,7 @@ jobs:
         run: echo "MY_PAT=${{ secrets.MY_PAT }}"
 
       - name: Run My Custom Go Action
-        uses: karthiknaveene/gha-action@CBP-12046
+        uses: cloudbees-gha-cbp/run-cloudbees-workflow@CBP-12046
         id: go-action
         with :
           #cloudbees-url: "https://api.saas-preprod.beescloud.com/"
