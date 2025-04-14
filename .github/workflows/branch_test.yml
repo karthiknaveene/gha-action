@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run My Custom Go Action
-        uses: cloudbees-gha-cbp/run-cloudbees-workflow@main
+        uses: karthiknaveene/gha-action@test-branch
         id: go-action
         with :
           cloudbees-pat: ${{ secrets.PROD_PAT }}
