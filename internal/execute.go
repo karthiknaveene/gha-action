@@ -32,7 +32,7 @@ func (config *Config) Run(_ context.Context) (err error) {
 	err = sendCloudEvent(cloudEvent, config)
 	if err != nil {
 		//fmt.Println(err)
-		if strings.Contains(err.Error(), "Please provide a valid cloudbees") {
+		if strings.Contains(err.Error(), "Please provide a valid cloudbees") || strings.Contains(err.Error(), "no such host"){
 			fmt.Printf("Error sending CloudEvent to platform  : %v", err)
 			return err
 		}
