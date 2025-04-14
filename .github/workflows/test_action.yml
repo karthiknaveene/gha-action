@@ -15,6 +15,17 @@ jobs:
       - name: Set up environment variable for PAT
         run: echo "MY_PAT=${{ secrets.MY_PAT }}"
 
+      - name: Log in to GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_PAT }}
+
+      - name: Pull Docker image
+        run: |
+          docker pull ghcr.io/karthiknaveene/gha-action/gha-run-cbp-workflow:latest
+
       - name: Run My Custom Go Action
         uses: cloudbees-gha-cbp/run-cloudbees-workflow@CBP-12046
         id: go-action
