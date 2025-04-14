@@ -16,11 +16,11 @@ jobs:
         run: echo "MY_PAT=${{ secrets.MY_PAT }}"
 
       - name: Run My Custom Go Action
-        uses: karthiknaveene/gha-action@test-branch
+        uses: karthiknaveene/gha-action@CBP-12046
         id: go-action
         with :
-          cloudbees-url: "https://api.saas-preprod.beescloud.com/"
-          cloudbees-pat: ${{ secrets.MY_PAT }}
+          #cloudbees-url: "https://api.saas-preprod.beescloud.com/"
+          cloudbees-pat: ${{ secrets.PROD_PAT }}
           #component-id: "395bb7a1-0380-429a-9638-3b33a5e6d026"
           #component-id: "invalid"
           #branch-name: "main"
