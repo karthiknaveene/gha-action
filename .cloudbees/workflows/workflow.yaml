@@ -6,8 +6,7 @@ on:
   push:
     branches:
       - go
-
-   workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   GO-Native-Test:
