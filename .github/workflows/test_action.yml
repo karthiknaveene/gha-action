@@ -30,7 +30,7 @@ jobs:
         uses: cloudbees-gha-cbp/run-cloudbees-workflow@CBP-12046
         id: go-action
         with :
-          cloudbees-url: "https://api.saas-preprod.beescloud.com/"
+          cloudbees-url: "https://api.saas-preprod.beescloud.com/qasx"
           cloudbees-pat: ${{ secrets.EXTERNAL_PAT }}
           #component-id: "395bb7a1-0380-429a-9638-3b33a5e6d026"
           #component-id: "invalid"
