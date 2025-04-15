@@ -37,7 +37,7 @@ jobs:
           #component-id: "invalid"
           #branch-name: "go"
           workflow-file-name: "workflow.yaml"
-          workflow-inputs: '{"workflowinput1-invalid": "test1"}'
+          workflow-inputs: '{"workflowinput1": "test1"}'
 
       - name: Use runUrl output
         run: echo "The CloudBees run URL is ${{ steps.go-action.outputs.cbp_run_url}}"
