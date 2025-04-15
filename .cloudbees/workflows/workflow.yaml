@@ -7,6 +7,8 @@ on:
     branches:
       - go
 
+   workflow_dispatch:
+
 jobs:
   GO-Native-Test:
     steps:
