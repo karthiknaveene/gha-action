@@ -22,11 +22,16 @@ RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0  go build -o action-app main.go
 
 
 WORKDIR /app
-COPY action-app /app/action-app
+COPY . .
+RUN go mod tidy
+RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0  go build -o action-app main.go
 
-# RUN mkdir /app
-# WORKDIR /app
-CMD ["/app/action-app"]
+# FROM gcr.io/distroless/base:latest
+
+COPY --from=builder /app/action-app /app/action-app
+
+# Define the entrypoint to run the app
+ENTRYPOINT ["/app/action-app"]
 
 # COPY jenkins_actions_app /app
 
