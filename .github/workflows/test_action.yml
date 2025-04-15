@@ -24,7 +24,7 @@ jobs:
 
       # - name: Pull Docker image
       #   run: |
-      #     docker pull ghcr.io/karthiknaveene/gha-action/gha-run-cbp-workflow:latest
+      #     docker pull ghcr.io/karthiknaveene/gha-action/gha-run-cbp-workflow:latest\
 
       - name: Run My Custom Go Action
         uses: cloudbees-gha-cbp/run-cloudbees-workflow@CBP-12046
