@@ -34,7 +34,7 @@ jobs:
           cloudbees-pat: ${{ secrets.PREPROD_PAT }}
           #cloudbees-pat: "invalid"
           #component-id: "395bb7a1-0380-429a-9638-3b33a5e6d026"
-          component-id: "invalid"
+          #component-id: "invalid"
           branch-name: "workflowTest1"
           workflow-file-name: "workflow-test-1.yaml"
           workflow-inputs: '{"workflowinput1": "test1"}'
