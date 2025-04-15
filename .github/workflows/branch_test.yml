@@ -12,13 +12,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run My Custom Go Action
-        uses: cloudbees-gha-cbp/run-cloudbees-workflow@CBP-10930
+        uses: cloudbees-gha-cbp/run-cloudbees-workflow@main
         id: go-action
         with :
-          cloudbees-pat: ${{ secrets.PROD_PAT }}
-          component-id: "20360000-ce0e-4c39-ace8-65a6f0803bee"
-          branch-name: "test"
-          workflow-file-name: "cb-workflow.yaml"
+          cloudbees-url: "https://api.saas-preprod.beescloud.com/"
+          cloudbees-pat: ${{ secrets.MY_PAT }}
+          #component-id: "20360000-ce0e-4c39-ace8-65a6f0803bee"
+          branch-name: "test-branch"
+          workflow-file-name: "workflow6.yaml"
 
       - name: Use runUrl output
         run: echo "The CloudBees run URL is ${{ steps.go-action.outputs.cbp_run_url}}"
