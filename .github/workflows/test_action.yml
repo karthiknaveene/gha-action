@@ -31,9 +31,9 @@ jobs:
         id: go-action
         with :
           cloudbees-url: "https://api.saas-preprod.beescloud.com/"
-          #cloudbees-pat: ${{ secrets.MY_PAT }}
-          cloudbees-pat: "invalid"
-          #component-id: "395bb7a1-0380-429a-9638-3b33a5e6d026"
+          cloudbees-pat: ${{ secrets.PREPROD_PAT }}
+          #cloudbees-pat: "invalid"
+          component-id: "395bb7a1-0380-429a-9638-3b33a5e6d026"
           #component-id: "invalid"
           #branch-name: "main"
           workflow-file-name: "workflow.yaml"
