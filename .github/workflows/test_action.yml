@@ -30,9 +30,9 @@ jobs:
         uses: cloudbees-gha-cbp/run-cloudbees-workflow@CBP-12046
         id: go-action
         with :
-          cloudbees-url: "https://api.saaxss-qa.beeasscloud.com/"
-          cloudbees-pat: ${{ secrets.QA_PAT }}
-          #cloudbees-pat: "invalid"
+          cloudbees-url: "https://api.saas-qa.beescloud.com/"
+          #cloudbees-pat: ${{ secrets.QA_PAT }}
+          cloudbees-pat: "invalid"
           #component-id: "395bb7a1-0380-429a-9638-3b33a5e6d026"
           component-id: "e46d6663-5516-4aaa-b0ab-60b0d8ebccea"
           branch-name: "test-branch"
