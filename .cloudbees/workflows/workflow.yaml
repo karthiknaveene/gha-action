@@ -27,6 +27,20 @@ jobs:
           echo "sleep"
           sleep 10
           echo "Hello 2"
+      - name: Say hello 3
+        uses: docker://golang:1.20.3-alpine3.17
+        shell: sh
+        run: |
+          echo "sleep"
+          sleep 10
+          echo "Hello 3"
+      - name: Say hello 4
+        uses: docker://golang:1.20.3-alpine3.17
+        shell: sh
+        run: |
+          echo "sleep"
+          sleep 10
+          echo "Hello 4"
       - name: Say goodby
         uses: docker://golang:1.20.3-alpine3.17
         shell: sh
