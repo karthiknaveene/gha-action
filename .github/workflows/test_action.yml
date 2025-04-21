@@ -35,9 +35,10 @@ jobs:
           #component-id: "637142ba-6b52-4fd0-a028-c51cf887f247"
           #component-id: "395bb7a1-0380-429a-9638-3b33a5e6d026"
           #component-id: "e46d6663-5516-4aaa-b0ab-60b0d8ebccea"
-          #branch-name: "test-branch"
-          workflow-file-name: "workflow.yaml"
-          workflow-inputs: '{"workflowinput1": "test1"}'
+          component-id: "82d36fc9-fdc2-4655-ac29-4f21083ef429"
+          branch-name: "master"
+          workflow-file-name: "cbp-build-artifact.yaml"
+          #workflow-inputs: '{"workflowinput1": "test1"}'
 
           
 
