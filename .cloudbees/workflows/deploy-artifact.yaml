@@ -26,5 +26,5 @@ jobs:
           version: ${{ inputs.image-version }}
           url:  ${{ inputs.url }}
           digest:  ${{ inputs.digest }}
-          target-environment: PREPROD
+          target-environment: prod
           name:  ${{ inputs.image-name }}
