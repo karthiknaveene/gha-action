@@ -48,9 +48,9 @@ jobs:
         id: go-action
         with:
           # The CloudBees platform URL.
-          #cloudbees-url: "https://api.saas-qa.beescloud.com/sXS"
+          cloudbees-url: "https://api.saas-qa.beescloud.com/"
           # The CloudBees platform personal access token.
-          cloudbees-pat:  ${{ secrets.PROD_PAT }}
+          cloudbees-pat:  ${{ secrets.QA_PAT }}
           # The Component-id of the CloudBees workflow to be run. 
           #component-id: "0e434030-660f-412d-896f-9dbb16d8e1f3"
           # The branch name of the CloudBees workflow to be run.
