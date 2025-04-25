@@ -55,11 +55,11 @@ jobs:
           #component-id: "0e434030-660f-412d-896f-9dbb16d8e1f3"
           #component-id: "e46d6663-5516-4aaa-b0ab-60b0d8ebccea"
           # The branch name of the CloudBees workflow to be run.
-          #branch-name: "test-branch"
+          branch-name: "test-branch"
           # The name of the CloudBees workflow to be run.
-          workflow-file-name: "workflow.yaml"
+          workflow-file-name: "build-action.yaml"
           # Input parameters required to run the workflow, formatted as JSON data in key/value pairs.
-          workflow-inputs: '{"workflowinput1": "test1-invalid"}'
+          #workflow-inputs: '{"workflowinput1": "test1-invalid"}'
           
         
 
