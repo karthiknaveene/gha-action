@@ -57,7 +57,7 @@ jobs:
           # The branch name of the CloudBees workflow to be run.
           #branch-name: "test-branch"
           # The name of the CloudBees workflow to be run.
-          workflow-file-name: "workflow.yml"
+          workflow-file-name: "workflow.yaml"
           # Input parameters required to run the workflow, formatted as JSON data in key/value pairs.
           workflow-inputs: '{"workflowinput1": "test1-invalid"}'
           
