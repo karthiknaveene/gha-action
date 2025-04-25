@@ -56,9 +56,9 @@ jobs:
           # The branch name of the CloudBees workflow to be run.
           branch-name: "helm-test"
           # The name of the CloudBees workflow to be run.
-          workflow-file-name: "s3-action-example.yaml-invalid"
+          workflow-file-name: "s3-action-example.yaml"
           # Input parameters required to run the workflow, formatted as JSON data in key/value pairs.
-          #workflow-inputs: '{"workflowinput1": "test1"}'
+          workflow-inputs: '{"workflowinput1": "test1"}'
           
         
 
