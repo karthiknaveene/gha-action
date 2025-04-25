@@ -48,7 +48,7 @@ jobs:
         id: go-action
         with:
           # The CloudBees platform URL.
-          cloudbees-url: "https://api.saas-qa.beescloud.com/sXS"
+          #cloudbees-url: "https://api.saas-qa.beescloud.com/sXS"
           # The CloudBees platform personal access token.
           cloudbees-pat:  ${{ secrets.PROD_PAT }}
           # The Component-id of the CloudBees workflow to be run. 
@@ -56,7 +56,7 @@ jobs:
           # The branch name of the CloudBees workflow to be run.
           branch-name: "helm-test"
           # The name of the CloudBees workflow to be run.
-          workflow-file-name: "s3-action-example.yaml"
+          #workflow-file-name: "s3-action-example.yaml"
           # Input parameters required to run the workflow, formatted as JSON data in key/value pairs.
           #workflow-inputs: '{"workflowinput1": "test1"}'
           
