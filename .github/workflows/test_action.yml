@@ -52,9 +52,9 @@ jobs:
           # The CloudBees platform personal access token.
           cloudbees-pat:  ${{ secrets.PROD_PAT }}
           # The Component-id of the CloudBees workflow to be run. 
-          component-id: "0e434030-660f-412d-896f-9dbb16d8e1f3-invalid"
+          component-id: "0e434030-660f-412d-896f-9dbb16d8e1f3"
           # The branch name of the CloudBees workflow to be run.
-          branch-name: "helm-test"
+          branch-name: "helm-test-invalid"
           # The name of the CloudBees workflow to be run.
           workflow-file-name: "s3-action-example.yaml"
           # Input parameters required to run the workflow, formatted as JSON data in key/value pairs.
