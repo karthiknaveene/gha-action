@@ -48,7 +48,7 @@ jobs:
         id: go-action
         with:
           # The CloudBees platform URL.
-          cloudbees-url: "https://api.saas-preprod.beescloud.com/"
+          #cloudbees-url: "https://api.saas-preprod.beescloud.com/"
           # The CloudBees platform personal access token.
           cloudbees-pat:  ${{ secrets.EXTERNAL_PAT }}
           # The Component-id of the CloudBees workflow to be run. 
