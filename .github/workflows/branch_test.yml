@@ -31,7 +31,7 @@ jobs:
           # The CloudBees platform component ID.
           component-id: "1c0f4482-bd89-4489-8c86-313128f2f44a"
           # The name of the artifact.
-          name: "test"
+          name: "test-1"
           # The version of the artifact.
           version: "v1.0.1"
           # The url where the artifact version is located e.g. docker.io/myapp/myimg:1.0.0.
