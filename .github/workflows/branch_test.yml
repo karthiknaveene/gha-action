@@ -8,9 +8,7 @@ jobs:
   run-go-action:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
+    
       - name: Run My Custom Go Action
         uses: cloudbees-io-gha/run-cloudbees-workflow@v1
         id: go-action
@@ -22,27 +20,29 @@ jobs:
       - name: Use runUrl output
         run: echo "The CloudBees run URL is ${{ steps.go-action.outputs.cbp_run_url}}"
 
-      - name: Register build artifacts in Platform
-        uses: cloudbees-io-gha/register-build-artifact@v1
-        with:
-          # The CloudBees platform personal access token.
-          cloudbees-url: "https://api.cloudbees.io"
-          cloudbees-pat: ${{ secrets.PROD_PAT }}
-          # The CloudBees platform component ID.
-          component-id: "1c0f4482-bd89-4489-8c86-313128f2f44a"
-          # The name of the artifact.
-          name: "test-1"
-          # The version of the artifact.
-          version: "v1.0.2"
-          # The url where the artifact version is located e.g. docker.io/myapp/myimg:1.0.0.
-          url: "test-1:1.0.2"
-          digest: "test-digest"
-
       - name: Publish evidence to Platform
         uses: cloudbees-io-gha/publish-evidence-item@v1
         with:
           cloudbees-pat:  ${{ secrets.PROD_PAT }}
           content: "test publish evidence"
+
+      - name: Publish test results to Platform
+        uses: cloudbees-io-gha/publish-test-results@v1
+        with:
+          cloudbees-pat: ${{ secrets.PROD_PAT }}
+          test-type: go
+          results-path: ${{ cloudbees.workspace }}/test_reports
+
+      - name: Register build artifacts in Platform
+        uses: cloudbees-io-gha/register-build-artifact@v1
+        with:
+          cloudbees-url: "https://api.cloudbees.io"
+          cloudbees-pat: ${{ secrets.PROD_PAT }}
+          component-id: "1c0f4482-bd89-4489-8c86-313128f2f44a"
+          name: "test-1"
+          version: "v1.0.3"
+          url: "test-1:1.0.3"
+          digest: "test-digest"
           
 
           
