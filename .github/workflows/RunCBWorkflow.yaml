@@ -88,6 +88,7 @@ jobs:
           digest: "test-digest"
           cloudbees-pat: ${{ secrets.PROD_PAT }}
           cloudbees-url: "https://api.cloudbees.io"
+          component-id: "1c0f4482-bd89-4489-8c86-313128f2f44a"
 
 
 
