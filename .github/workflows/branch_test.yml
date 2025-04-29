@@ -50,8 +50,8 @@ jobs:
           cloudbees-pat: ${{ secrets.PROD_PAT }}
           component-id: "1c0f4482-bd89-4489-8c86-313128f2f44a"
           name: "test-1"
-          version: "v1.0.3"
-          url: "test-1:1.0.3"
+          version: "v1.0.4"
+          url: "test-1:1.0.4"
           digest: "sha256:c4292bf31076d1ee04ecb958239b501250f64c450c863f8f83cace1b63fd95c2"
           
 
