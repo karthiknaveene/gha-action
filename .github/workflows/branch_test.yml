@@ -12,17 +12,39 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run My Custom Go Action
-        uses: cloudbees-gha-cbp/run-cloudbees-workflow@main
+        uses: cloudbees-io-gha/run-cloudbees-workflow@v1
         id: go-action
         with :
-          cloudbees-url: "https://api.saas-preprod.beescloud.com/"
-          cloudbees-pat: ${{ secrets.MY_PAT }}
-          #component-id: "20360000-ce0e-4c39-ace8-65a6f0803bee"
+          cloudbees-pat: ${{ secrets.PROD_PAT }}
           branch-name: "test-branch"
           workflow-file-name: "workflow6.yaml"
 
       - name: Use runUrl output
         run: echo "The CloudBees run URL is ${{ steps.go-action.outputs.cbp_run_url}}"
+
+      - name: Register build artifacts in Platform
+        uses: cloudbees-io-gha/register-build-artifact@v1
+        with:
+          # The CloudBees platform personal access token.
+          cloudbees-url: "https://api.cloudbees.io"
+          cloudbees-pat: ${{ secrets.PROD_PAT }}
+          # The CloudBees platform component ID.
+          component-id: "1c0f4482-bd89-4489-8c86-313128f2f44a"
+          # The name of the artifact.
+          name: "test"
+          # The version of the artifact.
+          version: "v1.0.0"
+          # The url where the artifact version is located e.g. docker.io/myapp/myimg:1.0.0.
+          url: "test-url"
+
+      - name: Publish evidence to Platform
+        uses: cloudbees-io-gha/publish-evidence-item@v1
+        with:
+          cloudbees-pat:  ${{ secrets.PROD_PAT }}
+          content: "test publish evidence"
+          
+
+          
         
    
         
