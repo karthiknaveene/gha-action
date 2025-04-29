@@ -52,7 +52,7 @@ jobs:
           name: "test-1"
           version: "v1.0.3"
           url: "test-1:1.0.3"
-          digest: "test-digest"
+          digest: "sha256:c4292bf31076d1ee04ecb958239b501250f64c450c863f8f83cace1b63fd95c2"
           
 
           
