@@ -82,10 +82,11 @@ jobs:
       - name: Register Build Artifact
         uses: cloudbees-io-gha/register-build-artifact@v1
         with:
-          name: "demo-service-12"
-          version: "1.0.0"
-          url: "docker.io/demo-service-12/1.0.0"
-          digest: "test-digest"
+          name: "demo-run-cloudbees-workflow"
+          version: "${{ steps.versioning.outputs.version }}"
+          url: "docker.io/${{ secrets.DOCKER_USERNAME }}/demo-service:${{ steps.versioning.outputs.version }}"
+          digest: "${{ steps.image-digest.outputs.digest }}"
+          type: "docker"
           cloudbees-pat: ${{ secrets.PROD_PAT }}
           cloudbees-url: "https://api.cloudbees.io"
           component-id: "1c0f4482-bd89-4489-8c86-313128f2f44a"
