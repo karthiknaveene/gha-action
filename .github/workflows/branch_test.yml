@@ -26,12 +26,22 @@ jobs:
           cloudbees-pat:  ${{ secrets.PROD_PAT }}
           content: "test publish evidence"
 
-      - name: Publish test results to Platform
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          repository: apache/commons-lang
+          
+      - name: Run Tests with Maven
+        run: |
+          mvn test -Dtest=StringUtilsTest
+          ls -lrt
+          
+      - name: Run My Custom Go Action for GO
         uses: cloudbees-io-gha/publish-test-results@v1
         with:
+          test-type: JUNIT
+          results-path: target/surefire-reports/*
           cloudbees-pat: ${{ secrets.PROD_PAT }}
-          test-type: go
-          results-path: ${{ cloudbees.workspace }}/test_reports
 
       - name: Register build artifacts in Platform
         uses: cloudbees-io-gha/register-build-artifact@v1
