@@ -50,7 +50,7 @@ jobs:
           # The CloudBees platform URL.
           cloudbees-url: "https://api.saas-preprod.beescloud.com/"
           # The CloudBees platform personal access token.
-          cloudbees-pat:  ${{ secrets.MY_PAT }}
+          cloudbees-pat:  ${{ secrets.PREPROD_PAT }}
           # The Component-id of the CloudBees workflow to be run. 
           #component-id: "0e434030-660f-412d-896f-9dbb16d8e1f3"
           #component-id: "e46d6663-5516-4aaa-b0ab-60b0d8ebccea"
