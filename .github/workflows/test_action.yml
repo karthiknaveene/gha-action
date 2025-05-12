@@ -61,7 +61,6 @@ jobs:
           # Input parameters required to run the workflow, formatted as JSON data in key/value pairs.
           workflow-inputs: '{"workflowinput1": "test1-invalid"}'
           
-
         
 
       - name: Use runUrl output
