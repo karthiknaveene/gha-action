@@ -43,14 +43,14 @@ jobs:
       
       - name: Run CloudBees platform workflow
         # You may pin to the exact commit or the version.
-        # uses: cloudbees-io-gha/run-cloudbees-workflow@2313e0519b18e57249e3fbcb719b09303b472dcd
-        uses: cloudbees-io-gha/run-cloudbees-workflow@v1
+        uses: karthiknaveene/gha-action@main
+        #uses: cloudbees-io-gha/run-cloudbees-workflow@v1
         id: go-action
         with:
           # The CloudBees platform URL.
-          #cloudbees-url: "https://api.saas-preprod.beescloud.com/"
+          cloudbees-url: "https://api.saas-preprod.beescloud.com/"
           # The CloudBees platform personal access token.
-          cloudbees-pat:  ${{ secrets.EXTERNAL_PAT }}
+          cloudbees-pat:  ${{ secrets.MY_PAT }}
           # The Component-id of the CloudBees workflow to be run. 
           #component-id: "0e434030-660f-412d-896f-9dbb16d8e1f3"
           #component-id: "e46d6663-5516-4aaa-b0ab-60b0d8ebccea"
