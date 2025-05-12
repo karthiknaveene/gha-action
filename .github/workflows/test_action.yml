@@ -64,6 +64,7 @@ jobs:
 
       - name: Set CloudBees run URL as output
         run: |
+          ls -l /tmp
           runUrl=$(cat /tmp/github_output.txt)
           echo "cloudbees_run_url=$runUrl" >> $GITHUB_ENV
       
