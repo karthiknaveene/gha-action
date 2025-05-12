@@ -60,8 +60,17 @@ jobs:
           workflow-file-name: "workflow.yaml"
           # Input parameters required to run the workflow, formatted as JSON data in key/value pairs.
           workflow-inputs: '{"workflowinput1": "test1-invalid"}'
+      
+
+      - name: Set CloudBees run URL as output
+        run: |
+          runUrl=$(cat /tmp/github_output.txt)
+          echo "cloudbees_run_url=$runUrl" >> $GITHUB_ENV
+      
+      - name: Use CloudBees run URL
+        run: echo "The CloudBees run URL is ${{ env.cloudbees_run_url }}"
           
-        
+      
 
       - name: Use runUrl output
         run: echo "The CloudBees run URL is ${{ steps.go-action.outputs.cbp_run_url}}"
