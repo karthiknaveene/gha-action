@@ -11,68 +11,18 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-
-      # - name: Set up environment variable for PAT
-      #   run: echo "MY_PAT=${{ secrets.MY_PAT }}"
-
-      # - name: Log in to GHCR
-      #   uses: docker/login-action@v2
-      #   with:
-      #     registry: ghcr.io
-      #     username: ${{ github.actor }}
-      #     password: ${{ secrets.GHCR_PAT }}
-
-      # - name: Pull Docker image
-      #   run: |
-      #     docker pull ghcr.io/karthiknaveene/gha-action/gha-run-cbp-workflow:latest\
-
-      # - name: Run My Custom Go Action
-      #   uses: cloudbees-gha-cbp/run-cloudbees-workflow@main
-      #   id: go-action
-      #   with :
-      #     #cloudbees-url: "https://api.saas-qa.beescloud.com/"
-      #     cloudbees-pat: ${{ secrets.PROD_PAT }}
-      #     #component-id: "637142ba-6b52-4fd0-a028-c51cf887f247"
-      #     #component-id: "395bb7a1-0380-429a-9638-3b33a5e6d026"
-      #     #component-id: "e46d6663-5516-4aaa-b0ab-60b0d8ebccea"
-      #     component-id: "82d36fc9-fdc2-4655-ac29-4f21083ef429"
-      #     branch-name: "master"
-      #     workflow-file-name: "cbp-build-artifact.yaml"
-      #     #workflow-inputs: '{"workflowinput1": "test1"}'
-
       
       - name: Run CloudBees platform workflow
-        # You may pin to the exact commit or the version.
         uses: karthiknaveene/gha-action@main
         #uses: cloudbees-io-gha/run-cloudbees-workflow@v1
         id: go-action
         with:
-          # The CloudBees platform URL.
           cloudbees-url: "https://api.saas-preprod.beescloud.com/"
-          # The CloudBees platform personal access token.
           cloudbees-pat:  ${{ secrets.PREPROD_PAT }}
-          # The Component-id of the CloudBees workflow to be run. 
-          #component-id: "0e434030-660f-412d-896f-9dbb16d8e1f3"
-          #component-id: "e46d6663-5516-4aaa-b0ab-60b0d8ebccea"
-          # The branch name of the CloudBees workflow to be run.
-          #branch-name: "test-branch"
-          # The name of the CloudBees workflow to be run.
           workflow-file-name: "workflow.yaml"
-          # Input parameters required to run the workflow, formatted as JSON data in key/value pairs.
-          workflow-inputs: '{"workflowinput1": "test1-invalid"}'
-      
-
-      - name: Set CloudBees run URL as output
-        run: |
-          ls -l /tmp/github_output
-          runUrl=$(cat /tmp/github_output/output.txt)
-          echo "cloudbees_run_url=$runUrl" >> $GITHUB_ENV
-      
-      - name: Use CloudBees run URL
-        run: echo "The CloudBees run URL is ${{ env.cloudbees_run_url }}"
+          workflow-inputs: '{"workflowinput1": "test1"}'
           
       
-
       - name: Use runUrl output
         run: echo "The CloudBees run URL is ${{ steps.go-action.outputs.cbp_run_url}}"
         
