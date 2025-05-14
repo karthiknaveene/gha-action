@@ -21,6 +21,10 @@ jobs:
           cloudbees-pat:  ${{ secrets.PREPROD_PAT }}
           workflow-file-name: "workflow.yaml"
           workflow-inputs: '{"workflowinput1": "test1"}'
+
+      - name: Append Docker output to $GITHUB_OUTPUT
+        run: |
+          cat /app/output/custom_output >> $GITHUB_OUTPUT
           
       
       - name: Use runUrl output
