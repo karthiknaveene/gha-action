@@ -48,7 +48,7 @@ jobs:
           test-type: JUNIT
           results-path: target/surefire-reports/*
           cloudbees-url:  "https://api.saas-preprod.beescloud.com/"
-          cloudbees-pat:  ${{ secrets.PREPROD_PAT }}
+          #cloudbees-pat:  ${{ secrets.PREPROD_PAT }}
       # - name: Use runUrl output
       #   run: echo "The CloudBees run URL is ${{ steps.go-action.outputs.cbp_run_url}}"
         
