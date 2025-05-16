@@ -34,21 +34,21 @@ jobs:
         run: |
           mvn test -Dtest=StringUtilsTest
           ls -lrt
-      - name: Run My Custom Go Action for GO - OIDC
-        uses: cloudbees-io-gha/publish-test-results@CBP-14462
-        with:
-          test-type: JUNIT
-          results-path: target/surefire-reports/*
-          cloudbees-url:  "https://api.saas-preprod.beescloud.com/"
-          #cloudbees-pat:  ${{ secrets.PREPROD_PAT }}
-          
-      # - name: Run My Custom Go Action for GO - V1 
-      #   uses: cloudbees-io-gha/publish-test-results@v1
+      # - name: Run My Custom Go Action for GO - OIDC
+      #   uses: cloudbees-io-gha/publish-test-results@CBP-14462
       #   with:
       #     test-type: JUNIT
       #     results-path: target/surefire-reports/*
       #     cloudbees-url:  "https://api.saas-preprod.beescloud.com/"
-      #     cloudbees-pat:  ${{ secrets.PREPROD_PAT }}
+      #     #cloudbees-pat:  ${{ secrets.PREPROD_PAT }}
+          
+      - name: Run My Custom Go Action for GO - V1 
+        uses: cloudbees-io-gha/publish-test-results@v1
+        with:
+          test-type: JUNIT
+          results-path: target/surefire-reports/*
+          cloudbees-url:  "https://api.saas-preprod.beescloud.com/"
+          cloudbees-pat:  ${{ secrets.PREPROD_PAT }}
       # - name: Use runUrl output
       #   run: echo "The CloudBees run URL is ${{ steps.go-action.outputs.cbp_run_url}}"
         
