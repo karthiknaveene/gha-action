@@ -1,5 +1,9 @@
 name: Test My Go Action
 
+permissions:
+  contents: write 
+  packages: write
+
 on:
   workflow_dispatch:
   push:
