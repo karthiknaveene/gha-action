@@ -21,26 +21,26 @@ jobs:
         #uses: cloudbees-io-gha/run-cloudbees-workflow@v1
         id: go-action
         with:
-          cloudbees-url: "https://api.saas-preprod.beescloud.com/"
-          cloudbees-pat:  ${{ secrets.PREPROD_PAT }}
+          #cloudbees-url: "https://api.saas-preprod.beescloud.com/"
+          cloudbees-pat:  ${{ secrets.PROD_PAT }}
           workflow-file-name: "workflow.yaml"
           workflow-inputs: '{"workflowinput1": "test1"}'
 
-      # - name: Checkout Repository
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: apache/commons-lang
-      # - name: Run Tests with Maven
-      #   run: |
-      #     mvn test -Dtest=StringUtilsTest
-      #     ls -lrt
-      # - name: Run My Custom Go Action for GO - OIDC
-      #   uses: cloudbees-io-gha/publish-test-results@CBP-14462
-      #   with:
-      #     test-type: JUNIT
-      #     results-path: target/surefire-reports/*
-      #     cloudbees-url:  "https://api.saas-preprod.beescloud.com/"
-      #     #cloudbees-pat:  ${{ secrets.PREPROD_PAT }}
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          repository: apache/commons-lang
+      - name: Run Tests with Maven
+        run: |
+          mvn test -Dtest=StringUtilsTest
+          ls -lrt
+      - name: Run My Custom Go Action for GO - OIDC
+        uses: cloudbees-io-gha/publish-test-results@CBP-14462
+        with:
+          test-type: JUNIT
+          results-path: target/surefire-reports/*
+          cloudbees-url:  "https://api.saas-preprod.beescloud.com/"
+          #cloudbees-pat:  ${{ secrets.PREPROD_PAT }}
           
       # - name: Run My Custom Go Action for GO - V1 
       #   uses: cloudbees-io-gha/publish-test-results@v1
