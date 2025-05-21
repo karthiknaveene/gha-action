@@ -18,11 +18,11 @@ jobs:
       
       - name: Run CloudBees platform workflow
         #uses: karthiknaveene/gha-action@main
-        uses: cloudbees-io-gha/run-cloudbees-workflow@CBP-14490
+        uses: cloudbees-io-gha/run-cloudbees-workflow@v1
         id: go-action
         with:
-          cloudbees-url: "https://api.saas-preprod.beescloud.com/"
-          cloudbees-pat:  ${{ secrets.PREPROD_PAT }}
+          #cloudbees-url: "https://api.saas-preprod.beescloud.com/"
+          cloudbees-pat:  ${{ secrets.PROD_PAT }}
           workflow-file-name: "workflow.yaml"
           workflow-inputs: '{"workflowinput1": "test1"}'
 
