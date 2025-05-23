@@ -1,0 +1,16 @@
+name: Check GitHub App Permissions
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check_permissions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Make API Request to List Repositories
+        run: |
+          curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          https://api.github.com/installation/repositories
