@@ -17,10 +17,10 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Run CloudBees platform workflow
-        uses: cloudbees-io-gha/run-cloudbees-workflow@v1
+        uses: cloudbees-io-gha/run-cloudbees-workflow@v2
         id: go-action
         with:
-          cloudbees-pat:  ${{ secrets.PROD_PAT }}
+          cloudbees-url:  "https://api.saas-qa.beescloud.com/"
           workflow-file-name: "workflow.yaml"
           workflow-inputs: '{"workflowinput1": "test1"}'
 
@@ -48,11 +48,11 @@ jobs:
           ls -lrt
           
       - name: Run My Custom Go Action for GO - V1 
-        uses: cloudbees-io-gha/publish-test-results@v1
+        uses: cloudbees-io-gha/publish-test-results@v2
         with:
           test-type: JUNIT
           results-path: target/surefire-reports/*
-          cloudbees-pat:  ${{ secrets.PROD_PAT }}
+          cloudbees-url:  "https://api.saas-qa.beescloud.com/"
       
       - name: Use runUrl output
         run: echo "The CloudBees run URL is ${{ steps.go-action.outputs.cbp_run_url}}"
