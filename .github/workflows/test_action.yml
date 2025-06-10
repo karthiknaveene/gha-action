@@ -23,6 +23,7 @@ jobs:
           cloudbees-url:  "https://api.saas-qa.beescloud.com/"
           workflow-file-name: "workflow.yaml"
           workflow-inputs: '{"workflowinput1": "test1"}'
+          cloudbees-pat: ${{ secrets.QA_PAT }}
 
       # - name: Checkout Repository
       #   uses: actions/checkout@v3
