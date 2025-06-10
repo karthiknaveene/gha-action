@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Run CloudBees platform workflow
-        uses: cloudbees-io-gha/run-cloudbees-workflow@v2
+        uses: cloudbees-io-gha/run-cloudbees-workflow@v1
         id: go-action
         with:
           cloudbees-url:  "https://api.saas-qa.beescloud.com/"
