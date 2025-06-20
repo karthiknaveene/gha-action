@@ -1,0 +1,48 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: My workflow
+on:
+  push:
+    branches:
+      - '**'
+  workflow_dispatch:
+    
+jobs:
+  test:
+    steps:
+      - name: Say hello 1
+        uses: docker://golang:1.20.3-alpine3.17
+        shell: sh
+        run: |
+          echo "sleep"
+          sleep 10
+          echo "Hello 1"
+      - name: Say hello 2
+        uses: docker://golang:1.20.3-alpine3.17
+        shell: sh
+        run: |
+          echo "sleep"
+          sleep 10
+          echo "Hello 2"
+      - name: Say hello 3
+        uses: docker://golang:1.20.3-alpine3.17
+        shell: sh
+        run: |
+          echo "sleep"
+          sleep 10
+          echo "Hello 3"
+      - name: Say hello 4
+        uses: docker://golang:1.20.3-alpine3.17
+        shell: sh
+        run: |
+          echo "sleep"
+          sleep 10
+          echo "Hello 4"
+      - name: Say goodby
+        uses: docker://golang:1.20.3-alpine3.17
+        shell: sh
+        run: |
+          echo "sleep"
+          sleep 10
+          echo "Good bye"
+  
