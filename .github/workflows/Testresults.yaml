@@ -22,11 +22,11 @@ jobs:
           mvn test -Dtest=StringUtilsTest
           ls -lrt
           
-      - name: Run My Custom Go Action for GO
-        uses: cloudbees-io-gha/publish-test-results@v2
-        with:
-          test-type: JUNIT
-          results-path: target/surefire-reports/*
+      # - name: Run My Custom Go Action for GO
+      #   uses: cloudbees-io-gha/publish-test-results@v2
+      #   with:
+      #     test-type: JUNIT
+      #     results-path: target/surefire-reports/*
 
           
 
